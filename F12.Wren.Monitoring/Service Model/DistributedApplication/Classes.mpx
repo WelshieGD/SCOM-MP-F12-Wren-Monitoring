@@ -1,0 +1,113 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+		<TypeDefinitions>
+			<EntityTypes>
+				<ClassTypes>
+
+					<ClassType ID="F12.Wren.Monitoring.Stores.DistributedApplication" Base="System!System.Service" Abstract="false" Hosted="false" Accessibility="Public" Singleton="true"/>
+
+					<ClassType ID="F12.Wren.Monitoring.Stores.Central.Group" Base="System!System.Group" Abstract="false" Hosted="false" Accessibility="Public" Singleton="true"/>
+					<ClassType ID="F12.Wren.Monitoring.Stores.AllStores.Group" Base="System!System.Group" Abstract="false" Hosted="false" Accessibility="Public" Singleton="true"/>
+
+					<ClassType ID="F12.Wren.Monitoring.Stores.Store" Base="System!System.ApplicationComponent" Abstract="false" Hosted="false" Accessibility="Public" Singleton="false">
+						<!-- Unhosted but not a singleton so can have multiple instances ==> so needs to have key property -->
+						<Property ID="StoreCode" Key="true" Type="string"/>
+					</ClassType>							
+				</ClassTypes>
+
+				<RelationshipTypes>
+					<RelationshipType ID="F12.Wren.Monitoring.Stores.DistributedApplicationContainsCentralGroup" Base="System!System.Containment" Abstract="false" Accessibility="Internal">
+						<Source ID="Source" Type="F12.Wren.Monitoring.Stores.DistributedApplication"/>
+						<Target ID="Target" Type="F12.Wren.Monitoring.Stores.Central.Group"/>
+					</RelationshipType>
+
+					<RelationshipType ID="F12.Wren.Monitoring.Stores.DistributedApplicationContainsAllStoresGroup" Base="System!System.Containment" Abstract="false" Accessibility="Internal">
+						<Source ID="Source" Type="F12.Wren.Monitoring.Stores.DistributedApplication"/>
+						<Target ID="Target" Type="F12.Wren.Monitoring.Stores.AllStores.Group"/>
+					</RelationshipType>
+
+
+					<RelationshipType ID="F12.Wren.Monitoring.Stores.StoresContainsStoreServer" Base="System!System.Containment" Abstract="false" Accessibility="Internal">
+						<Source ID="Source" Type="F12.Wren.Monitoring.Stores.AllStores.Group"/>
+						<Target ID="Target" Type="F12.Wren.Monitoring.Stores.ComputerRole.StoreServer"/>
+					</RelationshipType>
+
+					<RelationshipType ID="F12.Wren.Monitoring.Stores.StoresContainsStoreClient" Base="System!System.Containment" Abstract="false" Accessibility="Internal">
+						<Source ID="Source" Type="F12.Wren.Monitoring.Stores.AllStores.Group"/>
+						<Target ID="Target" Type="F12.Wren.Monitoring.Stores.ComputerRole.StoreClient"/>
+					</RelationshipType>
+
+					<RelationshipType ID="F12.Wren.Stores.Monitoring.CentralContainsCentralProcessor" Base="System!System.Containment" Abstract="false" Accessibility="Internal">
+						<Source ID="Source" Type="F12.Wren.Monitoring.Stores.Central.Group"/>
+						<Target ID="Target" Type="F12.Wren.Monitoring.Stores.ComputerRole.CentralProcessor"/>
+					</RelationshipType>
+
+					<RelationshipType ID="F12.Wren.Stores.Monitoring.CentralContainsCentralReceiver" Base="System!System.Containment" Abstract="false" Accessibility="Internal">
+						<Source ID="Source" Type="F12.Wren.Monitoring.Stores.Central.Group"/>
+						<Target ID="Target" Type="F12.Wren.Monitoring.Stores.ComputerRole.CentralReceiver"/>
+					</RelationshipType>
+
+				</RelationshipTypes>
+				
+			</EntityTypes>
+		</TypeDefinitions>
+		<LanguagePacks>
+			<LanguagePack ID="ENU" IsDefault="true">
+				<DisplayStrings>
+					<!-- CLASSES -->
+					<DisplayString ElementID="F12.Wren.Monitoring.Stores.DistributedApplication">
+						<Name>F12 Stores - Application</Name>
+						<Description></Description>
+					</DisplayString>
+
+					<DisplayString ElementID="F12.Wren.Monitoring.Stores.Central.Group">
+						<Name>F12 Stores - Central Group</Name>
+						<Description></Description>
+					</DisplayString>
+					<DisplayString ElementID="F12.Wren.Monitoring.Stores.AllStores.Group">
+						<Name>F12 Stores - All Stores Group</Name>
+						<Description></Description>
+					</DisplayString>
+
+
+					<DisplayString ElementID="F12.Wren.Monitoring.Stores.Store">
+						<Name>F12 Stores - Store</Name>
+						<Description></Description>
+					</DisplayString>
+					<DisplayString ElementID="F12.Wren.Monitoring.Stores.Store" SubElementID="StoreCode">
+						<Name>Store Code</Name>
+						<Description></Description>
+					</DisplayString>
+					
+					<!-- RELATIONSHIPS -->
+
+					<DisplayString ElementID="F12.Wren.Monitoring.Stores.DistributedApplicationContainsCentralGroup">
+						<Name>F12.Wren.Monitoring.Stores.DistributedApplicationContainsCentralGroup</Name>
+						<Description></Description>
+					</DisplayString>
+
+					<DisplayString ElementID="F12.Wren.Monitoring.Stores.DistributedApplicationContainsAllStoresGroup">
+						<Name>F12.Wren.Monitoring.Stores.DistributedApplicationContainsAllStoresGroup</Name>
+						<Description></Description>
+					</DisplayString>
+					
+					<DisplayString ElementID="F12.Wren.Monitoring.Stores.StoresContainsStoreServer">
+						<Name>F12.Wren.Monitoring.Stores.StoresContainsStoreServer</Name>
+						<Description></Description>
+					</DisplayString>
+					
+					<DisplayString ElementID="F12.Wren.Stores.Monitoring.CentralContainsCentralProcessor">
+						<Name>F12.Wren.Stores.Monitoring.CentralContainsCentralProcessor</Name>
+						<Description></Description>
+					</DisplayString>
+					
+					<DisplayString ElementID="F12.Wren.Stores.Monitoring.CentralContainsCentralReceiver">
+						<Name>F12.Wren.Stores.Monitoring.CentralContainsCentralReceiver</Name>
+						<Description></Description>
+					</DisplayString>
+					
+
+				</DisplayStrings>
+			</LanguagePack>
+		</LanguagePacks>
+</ManagementPackFragment>

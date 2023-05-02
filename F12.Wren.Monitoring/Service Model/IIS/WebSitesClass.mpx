@@ -1,0 +1,53 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+        <ClassType ID="F12.Wren.Monitoring.WebSites.Group" Base="MSIL!Microsoft.SystemCenter.InstanceGroup" Accessibility="Public" Abstract="false" Hosted="false" Singleton="true">
+      </ClassType>    
+      </ClassTypes>
+		<RelationshipTypes>
+			<RelationshipType ID="F12.Wren.Monitoring.CentralGroupContainsWebsites" Base="System!System.Containment" Abstract="false" Accessibility="Public">
+				<Source ID="Source" Type="F12.Wren.Monitoring.Stores.Central.Group"></Source>
+				<Target ID="Target" Type="F12.Wren.Monitoring.WebSites.Group"/>
+			</RelationshipType>
+
+			<RelationshipType ID="F12.Wren.Monitoring.WebSitesGroupContainWebSites" Base="System!System.Containment" Abstract="false" Accessibility="Public">
+				<Source ID="Source" Type="F12.Wren.Monitoring.WebSites.Group"></Source>
+				<Target ID="Target" Type="MWI2!Microsoft.Windows.InternetInformationServices.10.0.WebSite"/>
+			</RelationshipType>
+
+			<RelationshipType ID="F12.Wren.Monitoring.CentralGroupContainsDatabase" Base="System!System.Containment" Abstract="false" Accessibility="Public">
+				<Source ID="Source" Type="F12.Wren.Monitoring.Stores.Central.Group"></Source>
+				<Target ID="Target" Type="MSWD!Microsoft.SQLServer.Windows.Database"/>
+			</RelationshipType>
+
+		</RelationshipTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="F12.Wren.Monitoring.WebSites.Group">
+          <Name>F12 Stores Web Sites Group</Name>
+          <Description></Description>
+        </DisplayString>
+
+		  <DisplayString ElementID="F12.Wren.Monitoring.CentralGroupContainsWebsites">
+			  <Name>F12.Wren.Monitoring.CentralGroupContainsWebsites</Name>
+			  <Description></Description>
+		  </DisplayString>
+
+		  <DisplayString ElementID="F12.Wren.Monitoring.WebSitesGroupContainWebSites">
+			  <Name>F12.Wren.Monitoring.WebSitesGroupContainWebSites</Name>
+			  <Description></Description>
+		  </DisplayString>
+
+		  <DisplayString ElementID="F12.Wren.Monitoring.CentralGroupContainsDatabase">
+			  <Name>F12.Wren.Monitoring.CentralGroupContainsDatabase</Name>
+			  <Description></Description>
+		  </DisplayString>
+
+	  </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

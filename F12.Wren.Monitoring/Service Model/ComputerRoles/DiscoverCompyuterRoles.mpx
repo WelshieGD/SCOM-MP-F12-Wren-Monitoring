@@ -1,0 +1,328 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<Monitoring>
+		<Discoveries>
+			<!-- SEED DISCOVERY --> 
+			<Discovery ID="F12.Wren.Monitoring.Stores.Seed.Discovery" Target="Windows!Microsoft.Windows.Server.Computer" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+				<Category>Discovery</Category>
+				<DiscoveryTypes>
+					<DiscoveryClass TypeID="F12.Wren.Monitoring.Stores.Seed" />
+				</DiscoveryTypes>
+				<DataSource ID="DS" TypeID="Windows!Microsoft.Windows.FilteredRegistryDiscoveryProvider">
+					<ComputerName>$Target/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</ComputerName>
+					<RegistryAttributeDefinitions>
+						<RegistryAttributeDefinition>
+							<!-- 
+PathType - Integer
+  Specifies whether the path is a key or a value.
+  • 0—Specifies that the path is to a key, for which the existence of the key should be checked.
+  • 1—Specifies that the path is to a value that should be retrieved.
+
+AttributeType -   Integer
+  The data type of the value to return:
+  • 0—Boolean
+  • 1—String
+  • 2—Integer
+  • 3—Float
+Values 1, 2, and 3 are used only when the PathType is set to 1.
+-->
+							<AttributeName>SeedExists</AttributeName>
+							<Path>SOFTWARE\SCOMDiscoveryData\Stores</Path>
+							<PathType>0</PathType>
+							<AttributeType>0</AttributeType>
+						</RegistryAttributeDefinition>
+					</RegistryAttributeDefinitions>
+					<Frequency>3600</Frequency>
+					<ClassId>$MPElement[Name="F12.Wren.Monitoring.Stores.Seed"]$</ClassId>
+					<InstanceSettings>
+						<Settings>
+							<Setting>
+								<Name>$MPElement[Name="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Name>
+								<Value>$Target/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Value>
+							</Setting>
+							<Setting>
+								<Name>$MPElement[Name="System!System.Entity"]/DisplayName$</Name>
+								<Value>$Target/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Value>
+							</Setting>
+						</Settings>
+					</InstanceSettings>
+					<Expression>
+						<SimpleExpression>
+							<ValueExpression>
+								<XPathQuery Type="String">Values/SeedExists</XPathQuery>
+							</ValueExpression>
+							<Operator>Equal</Operator>
+							<ValueExpression>
+								<Value Type="String">True</Value>
+							</ValueExpression>
+						</SimpleExpression>
+					</Expression>
+				</DataSource>
+			</Discovery>
+
+			<!-- CENTRAL PROCESSOR DISCOVERY --> 
+			
+			<Discovery ID="F12.Wren.Monitoring.Stores.ComputerRole.CentralProcessor.Discovery" Target="F12.Wren.Monitoring.Stores.Seed" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+				<Category>Discovery</Category>
+				<DiscoveryTypes>
+					<DiscoveryClass TypeID="F12.Wren.Monitoring.Stores.ComputerRole" />
+				</DiscoveryTypes>
+				<DataSource ID="DS" TypeID="Windows!Microsoft.Windows.FilteredRegistryDiscoveryProvider">
+					<ComputerName>$Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</ComputerName>
+					<RegistryAttributeDefinitions>
+						<RegistryAttributeDefinition>
+							<!-- 
+PathType - Integer
+  Specifies whether the path is a key or a value.
+  • 0—Specifies that the path is to a key, for which the existence of the key should be checked.
+  • 1—Specifies that the path is to a value that should be retrieved.
+
+AttributeType -   Integer
+  The data type of the value to return:
+  • 0—Boolean
+  • 1—String
+  • 2—Integer
+  • 3—Float
+Values 1, 2, and 3 are used only when the PathType is set to 1.
+-->
+							<AttributeName>KeyExists</AttributeName>
+							<Path>SOFTWARE\SCOMDiscoveryData\Stores\CentralProcessor</Path>
+							<PathType>0</PathType>
+							<AttributeType>0</AttributeType>
+						</RegistryAttributeDefinition>
+						<RegistryAttributeDefinition>
+							<AttributeName>QueuePath</AttributeName>
+							<Path>SOFTWARE\SCOMDiscoveryData\Stores\CentralProcessor\QueuePath</Path>
+							<PathType>1</PathType>
+							<AttributeType>1</AttributeType>
+						</RegistryAttributeDefinition>
+						<RegistryAttributeDefinition>
+							<AttributeName>DatabaseName</AttributeName>
+							<Path>SOFTWARE\SCOMDiscoveryData\Stores\CentralProcessor\DatabaseName</Path>
+							<PathType>1</PathType>
+							<AttributeType>1</AttributeType>
+						</RegistryAttributeDefinition>
+						<RegistryAttributeDefinition>
+							<AttributeName>DatabasePath</AttributeName>
+							<Path>SOFTWARE\SCOMDiscoveryData\Stores\CentralProcessor\DatabasePath</Path>
+							<PathType>1</PathType>
+							<AttributeType>1</AttributeType>
+						</RegistryAttributeDefinition>
+					</RegistryAttributeDefinitions>
+					<Frequency>3600</Frequency>
+					<ClassId>$MPElement[Name="F12.Wren.Monitoring.Stores.ComputerRole.CentralProcessor"]$</ClassId>
+					<InstanceSettings>
+						<Settings>
+							<Setting>
+								<Name>$MPElement[Name="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Name>
+								<Value>$Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Value>
+							</Setting>
+							<Setting>
+								<Name>$MPElement[Name="System!System.Entity"]/DisplayName$</Name>
+								<Value>$Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Value>
+							</Setting>
+							<Setting>
+								<Name>$MPElement[Name="F12.Wren.Monitoring.Stores.ComputerRole.CentralProcessor"]/QueuePath$</Name>
+								<Value>$Data/Values/QueuePath$</Value>
+							</Setting>
+							<Setting>
+								<Name>$MPElement[Name="F12.Wren.Monitoring.Stores.ComputerRole.CentralProcessor"]/DatabaseName$</Name>
+								<Value>$Data/Values/DatabaseName$</Value>
+							</Setting>
+							<Setting>
+								<Name>$MPElement[Name="F12.Wren.Monitoring.Stores.ComputerRole.CentralProcessor"]/DatabasePath$</Name>
+								<Value>$Data/Values/DatabasePath$</Value>
+							</Setting>
+						</Settings>
+					</InstanceSettings>
+					<Expression>
+						<SimpleExpression>
+							<ValueExpression>
+								<XPathQuery Type="String">Values/KeyExists</XPathQuery>
+							</ValueExpression>
+							<Operator>Equal</Operator>
+							<ValueExpression>
+								<Value Type="String">True</Value>
+							</ValueExpression>
+						</SimpleExpression>
+					</Expression>
+				</DataSource>
+			</Discovery>
+
+			<!-- STORE SERVER DISCOVERY -->
+
+			<Discovery ID="F12.Wren.Monitoring.Stores.ComputerRole.StoreServer.Discovery" Target="F12.Wren.Monitoring.Stores.Seed" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+				<Category>Discovery</Category>
+				<DiscoveryTypes>
+					<DiscoveryClass TypeID="F12.Wren.Monitoring.Stores.ComputerRole.StoreServer" />
+				</DiscoveryTypes>
+				<DataSource ID="DS" TypeID="Windows!Microsoft.Windows.FilteredRegistryDiscoveryProvider">
+					<ComputerName>$Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</ComputerName>
+					<RegistryAttributeDefinitions>
+						<RegistryAttributeDefinition>
+							<!-- 
+PathType - Integer
+  Specifies whether the path is a key or a value.
+  • 0—Specifies that the path is to a key, for which the existence of the key should be checked.
+  • 1—Specifies that the path is to a value that should be retrieved.
+
+AttributeType -   Integer
+  The data type of the value to return:
+  • 0—Boolean
+  • 1—String
+  • 2—Integer
+  • 3—Float
+Values 1, 2, and 3 are used only when the PathType is set to 1.
+-->
+							<AttributeName>KeyExists</AttributeName>
+							<Path>SOFTWARE\SCOMDiscoveryData\Stores\Server</Path>
+							<PathType>0</PathType>
+							<AttributeType>0</AttributeType>
+						</RegistryAttributeDefinition>
+						<RegistryAttributeDefinition>
+							<AttributeName>StoreCode</AttributeName>
+							<Path>SOFTWARE\SCOMDiscoveryData\Stores\Server\StoreCode</Path>
+							<PathType>1</PathType>
+							<AttributeType>1</AttributeType>
+						</RegistryAttributeDefinition>
+		
+					</RegistryAttributeDefinitions>
+					<Frequency>3600</Frequency>
+					<ClassId>$MPElement[Name="F12.Wren.Monitoring.Stores.ComputerRole.StoreServer"]$</ClassId>
+					<InstanceSettings>
+						<Settings>
+							<Setting>
+								<Name>$MPElement[Name="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Name>
+								<Value>$Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Value>
+							</Setting>
+							<Setting>
+								<Name>$MPElement[Name="System!System.Entity"]/DisplayName$</Name>
+								<Value>$Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Value>
+							</Setting>
+							<Setting>
+								<!-- Store Computer is where the property is defined -->
+								<Name>$MPElement[Name="F12.Wren.Monitoring.Stores.ComputerRole.StoreComputer"]/StoreCode$</Name>
+								<Value>$Data/Values/StoreCode$</Value>
+							</Setting>
+
+						</Settings>
+					</InstanceSettings>
+					<Expression>
+						<SimpleExpression>
+							<ValueExpression>
+								<XPathQuery Type="String">Values/KeyExists</XPathQuery>
+							</ValueExpression>
+							<Operator>Equal</Operator>
+							<ValueExpression>
+								<Value Type="String">True</Value>
+							</ValueExpression>
+						</SimpleExpression>
+					</Expression>
+				</DataSource>
+			</Discovery>
+
+
+			<!-- STORE CLIENT DISCOVERY -->
+
+			<Discovery ID="F12.Wren.Monitoring.Stores.ComputerRole.StoreClient.Discovery" Target="Windows!Microsoft.Windows.Client.Computer" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+				<Category>Discovery</Category>
+				<DiscoveryTypes>
+					<DiscoveryClass TypeID="F12.Wren.Monitoring.Stores.ComputerRole.StoreClient" />
+				</DiscoveryTypes>
+				<DataSource ID="DS" TypeID="Windows!Microsoft.Windows.FilteredRegistryDiscoveryProvider">
+					<!-- NO Need for /Host as targetting Windows Client Computer-->
+					<ComputerName>$Target/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</ComputerName>
+					<RegistryAttributeDefinitions>
+						<RegistryAttributeDefinition>
+							<!-- 
+PathType - Integer
+  Specifies whether the path is a key or a value.
+  • 0—Specifies that the path is to a key, for which the existence of the key should be checked.
+  • 1—Specifies that the path is to a value that should be retrieved.
+
+AttributeType -   Integer
+  The data type of the value to return:
+  • 0—Boolean
+  • 1—String
+  • 2—Integer
+  • 3—Float
+Values 1, 2, and 3 are used only when the PathType is set to 1.
+-->
+							<AttributeName>KeyExists</AttributeName>
+							<Path>SOFTWARE\SCOMDiscoveryData\Stores\Client</Path>
+							<PathType>0</PathType>
+							<AttributeType>0</AttributeType>
+						</RegistryAttributeDefinition>
+						<RegistryAttributeDefinition>
+							<AttributeName>StoreCode</AttributeName>
+							<Path>SOFTWARE\SCOMDiscoveryData\Stores\Server\StoreCode</Path>
+							<PathType>1</PathType>
+							<AttributeType>1</AttributeType>
+						</RegistryAttributeDefinition>
+
+					</RegistryAttributeDefinitions>
+					<Frequency>3600</Frequency>
+					<ClassId>$MPElement[Name="F12.Wren.Monitoring.Stores.ComputerRole.StoreServer"]$</ClassId>
+					<InstanceSettings>
+						<Settings>
+							<Setting>
+								<Name>$MPElement[Name="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Name>
+								<Value>$Target/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Value>
+							</Setting>
+							<Setting>
+								<Name>$MPElement[Name="System!System.Entity"]/DisplayName$</Name>
+								<Value>$Target/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Value>
+							</Setting>
+							<Setting>
+								<!-- Store Computer is where the property is defined -->
+								<Name>$MPElement[Name="F12.Wren.Monitoring.Stores.ComputerRole.StoreComputer"]/StoreCode$</Name>
+								<Value>$Data/Values/StoreCode$</Value>
+							</Setting>
+
+						</Settings>
+					</InstanceSettings>
+					<Expression>
+						<SimpleExpression>
+							<ValueExpression>
+								<XPathQuery Type="String">Values/KeyExists</XPathQuery>
+							</ValueExpression>
+							<Operator>Equal</Operator>
+							<ValueExpression>
+								<Value Type="String">True</Value>
+							</ValueExpression>
+						</SimpleExpression>
+					</Expression>
+				</DataSource>
+			</Discovery>
+
+		</Discoveries>
+	</Monitoring>
+
+	<LanguagePacks>
+		<LanguagePack ID="ENU" IsDefault="true">
+			<DisplayStrings>
+				<DisplayString ElementID="F12.Wren.Monitoring.Stores.Seed.Discovery">
+					<Name>Discover Seed - F12 Wren Monitoring Stores</Name>
+					<Description></Description>
+				</DisplayString>
+
+				<DisplayString ElementID="F12.Wren.Monitoring.Stores.ComputerRole.CentralProcessor.Discovery">
+					<Name>Discover Central Processor - F12 Wren Monitoring Stores</Name>
+					<Description></Description>
+				</DisplayString>
+
+				<DisplayString ElementID="F12.Wren.Monitoring.Stores.ComputerRole.StoreServer.Discovery">
+					<Name>Discover Store Server - F12 Wren Monitoring Stores</Name>
+					<Description></Description>
+				</DisplayString>
+
+				<DisplayString ElementID="F12.Wren.Monitoring.Stores.ComputerRole.StoreClient.Discovery">
+					<Name>Discover Store Client - F12 Wren Monitoring Stores</Name>
+					<Description></Description>
+				</DisplayString>
+
+			</DisplayStrings>
+			<KnowledgeArticles></KnowledgeArticles>
+		</LanguagePack>
+	</LanguagePacks>
+</ManagementPackFragment>

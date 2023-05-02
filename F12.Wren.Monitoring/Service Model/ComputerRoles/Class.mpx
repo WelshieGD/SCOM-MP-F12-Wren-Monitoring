@@ -1,0 +1,122 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<TypeDefinitions>
+		<EntityTypes>
+			<ClassTypes>
+				<!--	Seed class
+						Stores.Seed							 - Concrete (discover instances of it)
+															 - Base Windows!Microsoft.Windows.ApplicationComponent (so health doesn't roll up)
+															 - This is hosted so need a hosting relationship
+				
+						Stores.ComputerRole					 - Abstract	- Base Windows.ComputerRole so inherits hosting from Windows Computer
+						
+						Stores.ComputerRole.CentralServer	 - Abstract	- Base Stores.ComputerRole
+						Stores.ComputerRole.CentralReceiver  - Concrete - Base Stores.ComputerRole.CentralServer
+						Stores.ComputerRole.CentralProcessor - Concrete - Base Stores.ComputerRole
+						
+						Stores.ComputerRole.StoreComputer	 - Abstract - Base Stores.ComputerRole
+						Stores.ComputerRole.StoreServer		 - Concrete - Base Stores.ComputerRole.StoreComputer
+						Stores.ComputerRole.StoreServer		 - Concrete - Base Stores.ComputerRole.StoreComputer
+				-->
+				<ClassType ID="F12.Wren.Monitoring.Stores.Seed" Base="Windows!Microsoft.Windows.ApplicationComponent" Accessibility="Public" Abstract="false" Hosted="true">
+				</ClassType>
+				<ClassType ID="F12.Wren.Monitoring.Stores.ComputerRole" Base="Windows!Microsoft.Windows.ComputerRole" Accessibility="Public" Abstract="true" Hosted="true">
+				</ClassType>
+				
+				
+				<ClassType ID="F12.Wren.Monitoring.Stores.ComputerRole.CentralServer" Base="F12.Wren.Monitoring.Stores.ComputerRole" Accessibility="Public" Abstract="true" Hosted="true">
+				</ClassType>
+				<ClassType ID="F12.Wren.Monitoring.Stores.ComputerRole.CentralReceiver" Base="F12.Wren.Monitoring.Stores.ComputerRole.CentralServer" Accessibility="Public" Abstract="false" Hosted="true">
+				</ClassType>
+				<ClassType ID="F12.Wren.Monitoring.Stores.ComputerRole.CentralProcessor" Base="F12.Wren.Monitoring.Stores.ComputerRole.CentralServer" Accessibility="Public" Abstract="false" Hosted="true">
+					<Property ID="QueuePath" Key="false" Type="string"/>
+					<Property ID="DatabaseName" Key="false" Type="string"/>
+					<Property ID="DatabasePath" Key="false" Type="string"/>
+				</ClassType>
+
+				<ClassType ID="F12.Wren.Monitoring.Stores.ComputerRole.StoreComputer" Base="F12.Wren.Monitoring.Stores.ComputerRole" Accessibility="Public" Abstract="true" Hosted="true">
+					<Property ID="StoreCode" Key="false" Type="string"/>
+				</ClassType>
+				<ClassType ID="F12.Wren.Monitoring.Stores.ComputerRole.StoreServer" Base="F12.Wren.Monitoring.Stores.ComputerRole.StoreComputer" Accessibility="Public" Abstract="false" Hosted="true">
+				</ClassType>
+				<ClassType ID="F12.Wren.Monitoring.Stores.ComputerRole.StoreClient" Base="F12.Wren.Monitoring.Stores.ComputerRole.StoreComputer" Accessibility="Public" Abstract="false" Hosted="true">
+				</ClassType>
+
+			</ClassTypes>
+
+			<RelationshipTypes>
+				<RelationshipType ID="F12.Wren.Monitoring.Stores.ComputerHostsSeed" Abstract="false" Accessibility="Public" Base="System!System.Hosting">
+					<Source ID="Source" Type="Windows!Microsoft.Windows.Computer"></Source>
+					<Target ID="Target" Type="F12.Wren.Monitoring.Stores.Seed"></Target>
+				</RelationshipType>
+			</RelationshipTypes>
+			
+		</EntityTypes>
+	</TypeDefinitions>
+	<LanguagePacks>
+		<LanguagePack ID="ENU" IsDefault="true">
+			<DisplayStrings>
+				<DisplayString ElementID="F12.Wren.Monitoring.Stores.ComputerRole">
+					<Name>F12 Stores - Computer Role</Name>
+					<Description></Description>
+				</DisplayString>
+
+				<DisplayString ElementID="F12.Wren.Monitoring.Stores.ComputerRole.CentralServer">
+					<Name>F12 Stores - Central Server</Name>
+					<Description></Description>
+				</DisplayString>
+
+				<DisplayString ElementID="F12.Wren.Monitoring.Stores.ComputerRole.CentralReceiver">
+					<Name>F12 Stores - Central Receiver</Name>
+					<Description></Description>
+				</DisplayString>
+				<DisplayString ElementID="F12.Wren.Monitoring.Stores.ComputerRole.CentralProcessor">
+					<Name>F12 Stores - Central Processor</Name>
+					<Description></Description>
+				</DisplayString>
+				<DisplayString ElementID="F12.Wren.Monitoring.Stores.ComputerRole.CentralProcessor" SubElementID="QueuePath">
+					<Name>Queue Path</Name>
+					<Description></Description>
+				</DisplayString>
+				<DisplayString ElementID="F12.Wren.Monitoring.Stores.ComputerRole.CentralProcessor" SubElementID="DatabaseName">
+					<Name>Database Name</Name>
+					<Description></Description>
+				</DisplayString>
+				<DisplayString ElementID="F12.Wren.Monitoring.Stores.ComputerRole.CentralProcessor" SubElementID="DatabasePath">
+					<Name>Database Path</Name>
+					<Description></Description>
+				</DisplayString>
+
+				<DisplayString ElementID="F12.Wren.Monitoring.Stores.ComputerRole.StoreComputer">
+					<Name>F12 Stores - Store Computer Role</Name>
+					<Description></Description>
+				</DisplayString>
+				<DisplayString ElementID="F12.Wren.Monitoring.Stores.ComputerRole.StoreComputer" SubElementID="StoreCode">
+					<Name>Store Code</Name>
+					<Description></Description>
+				</DisplayString>
+
+				<DisplayString ElementID="F12.Wren.Monitoring.Stores.ComputerRole.StoreServer">
+					<Name>F12 Stores - Stores Server</Name>
+					<Description></Description>
+				</DisplayString>
+				<DisplayString ElementID="F12.Wren.Monitoring.Stores.ComputerRole.StoreClient">
+					<Name>F12 Stores - Stores Client</Name>
+					<Description></Description>
+				</DisplayString>
+
+
+
+				<DisplayString ElementID="F12.Wren.Monitoring.Stores.Seed">
+					<Name>F12 Wren Monitoring Stores - Seed</Name>
+					<Description></Description>
+				</DisplayString>
+
+				<DisplayString ElementID="F12.Wren.Monitoring.Stores.ComputerHostsSeed">
+					<Name>F12 Wren Monitoring Stores Computer Hosts Seed</Name>
+					<Description></Description>
+				</DisplayString>
+
+			</DisplayStrings>
+		</LanguagePack>
+	</LanguagePacks>
+</ManagementPackFragment>

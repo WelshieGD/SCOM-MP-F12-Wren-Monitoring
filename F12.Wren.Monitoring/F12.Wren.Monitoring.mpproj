@@ -1,0 +1,102 @@
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProjectGuid>{a1abb0f5-a137-412b-a07f-6c76e7f8148d}</ProjectGuid>
+    <RootNamespace>F12.Wren</RootNamespace>
+    <Name>F12 Wren Monitoring</Name>
+    <ManagementPackName>F12.Wren.Monitoring</ManagementPackName>
+    <Version>1.0.0.0</Version>
+    <MpFrameworkVersion>v7.0.3</MpFrameworkVersion>
+    <MpFrameworkProfile>OM</MpFrameworkProfile>
+    <ProductVersion>1.1.0.0</ProductVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <GenerateSealed>True</GenerateSealed>
+    <Company>Graham Davies</Company>
+    <Copyright>No Copyright. NO Warranty.Use at own risk. Just examples. Not for production use.</Copyright>
+    <DelaySigning>False</DelaySigning>
+    <AssemblyOriginatorKeyFile>C:\SCOM\GDHomelab.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath>bin\Release\</OutputPath>
+    <DelaySigning>false</DelaySigning>
+    <Company>MyCompany</Company>
+    <Copyright>Copyright (c) MyCompany. All rights reserved.</Copyright>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile />
+  </PropertyGroup>
+  <ItemGroup>
+    <ManagementPackReference Include="Microsoft.SQLServer.Windows.Discovery">
+      <HintPath>C:\Program Files (x86)\System Center Management Packs\Microsoft System Center Management Pack for SQL Server on Windows\7.0.42.0\Microsoft.SQLServer.Windows.Discovery.mpb</HintPath>
+      <Alias>MSWD</Alias>
+      <MinVersion>7.0.42.0</MinVersion>
+    </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.SystemCenter.InstanceGroup.Library">
+      <HintPath>C:\Program Files (x86)\System Center Visual Studio Authoring Extensions\References\OM2016\Microsoft.SystemCenter.InstanceGroup.Library.mp</HintPath>
+      <Alias>MSIL</Alias>
+      <MinVersion>7.5.8501.0</MinVersion>
+    </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.SystemCenter.Library">
+      <Alias>SC</Alias>
+      <PackageToBundle>false</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.Windows.InternetInformationServices.2016">
+      <HintPath>C:\Program Files (x86)\System Center Management Packs\Microsoft System Center MP for IIS 2016 and 1709 Plus\Microsoft.Windows.InternetInformationServices.2016.mp</HintPath>
+      <Alias>MWI2</Alias>
+      <MinVersion>10.1.0.1</MinVersion>
+    </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.Windows.InternetInformationServices.CommonLibrary">
+      <HintPath>C:\Program Files (x86)\System Center Management Packs\Microsoft System Center MP for IIS 2016 and 1709 Plus\Microsoft.Windows.InternetInformationServices.CommonLibrary.mp</HintPath>
+      <Alias>MWIC</Alias>
+      <MinVersion>10.1.0.1</MinVersion>
+    </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.Windows.Library">
+      <Alias>Windows</Alias>
+      <PackageToBundle>false</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="System.Health.Library">
+      <Alias>Health</Alias>
+      <PackageToBundle>false</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="System.Library">
+      <Alias>System</Alias>
+      <PackageToBundle>false</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.SystemCenter.Visualization.Library">
+      <Alias>Visualization</Alias>
+      <PackageToBundle>false</PackageToBundle>
+    </ManagementPackReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ManagementPack.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\ApplicationComponent\Class.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\ComputerRoles\Class.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\ComputerRoles\DiscoverCompyuterRoles.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\DistributedApplication\Classes.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\IIS\WebSitesClass.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Service Model" />
+    <Folder Include="Service Model\ComputerRoles" />
+    <Folder Include="Service Model\ApplicationComponent" />
+    <Folder Include="Service Model\DistributedApplication" />
+    <Folder Include="Service Model\IIS" />
+    <Folder Include="Service Model\SQL" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VSAC\Microsoft.SystemCenter.OperationsManager.targets" />
+</Project>
