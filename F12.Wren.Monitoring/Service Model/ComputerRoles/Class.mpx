@@ -11,7 +11,7 @@
 						
 						Stores.ComputerRole.CentralServer	 - Abstract	- Base Stores.ComputerRole
 						Stores.ComputerRole.CentralReceiver  - Concrete - Base Stores.ComputerRole.CentralServer
-						Stores.ComputerRole.CentralProcessor - Concrete - Base Stores.ComputerRole
+						Stores.ComputerRole.CentralProcessor - Concrete - Base Stores.ComputerRole.CentralServer
 						
 						Stores.ComputerRole.StoreComputer	 - Abstract - Base Stores.ComputerRole
 						Stores.ComputerRole.StoreServer		 - Concrete - Base Stores.ComputerRole.StoreComputer

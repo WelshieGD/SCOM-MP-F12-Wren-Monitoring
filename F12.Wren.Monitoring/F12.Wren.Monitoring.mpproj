@@ -77,6 +77,10 @@
     <Compile Include="Service Model\ApplicationComponent\Class.mpx">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Service Model\ApplicationComponent\DiscoverQueue.mptg.mpx">
+      <SubType>Code</SubType>
+      <DependentUpon>Service Model\ApplicationComponent\DiscoverQueue.mptg</DependentUpon>
+    </Compile>
     <Compile Include="Service Model\ComputerRoles\Class.mpx">
       <SubType>Code</SubType>
     </Compile>
@@ -97,6 +101,15 @@
     <Folder Include="Service Model\DistributedApplication" />
     <Folder Include="Service Model\IIS" />
     <Folder Include="Service Model\SQL" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Service Model\ApplicationComponent\DiscoverQueues.ps1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Service Model\ApplicationComponent\DiscoverQueue.mptg">
+      <SubType>Content</SubType>
+      <Generator>FragmentGenerator</Generator>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VSAC\Microsoft.SystemCenter.OperationsManager.targets" />
 </Project>
