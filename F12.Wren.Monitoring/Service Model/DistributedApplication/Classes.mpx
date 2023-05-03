@@ -3,12 +3,13 @@
 		<TypeDefinitions>
 			<EntityTypes>
 				<ClassTypes>
-
+					<!-- Distribution Application System.Service -->
 					<ClassType ID="F12.Wren.Monitoring.Stores.DistributedApplication" Base="System!System.Service" Abstract="false" Hosted="false" Accessibility="Public" Singleton="true"/>
-
+					<!-- Top Level Groups for All Stores and Central Computers System.Group -->
 					<ClassType ID="F12.Wren.Monitoring.Stores.Central.Group" Base="System!System.Group" Abstract="false" Hosted="false" Accessibility="Public" Singleton="true"/>
 					<ClassType ID="F12.Wren.Monitoring.Stores.AllStores.Group" Base="System!System.Group" Abstract="false" Hosted="false" Accessibility="Public" Singleton="true"/>
 
+					
 					<ClassType ID="F12.Wren.Monitoring.Stores.Store" Base="System!System.ApplicationComponent" Abstract="false" Hosted="false" Accessibility="Public" Singleton="false">
 						<!-- Unhosted but not a singleton so can have multiple instances ==> so needs to have key property -->
 						<Property ID="StoreCode" Key="true" Type="string"/>
@@ -16,22 +17,26 @@
 				</ClassTypes>
 
 				<RelationshipTypes>
+
+					<!-- Distributed Application Contains Central Group -->
 					<RelationshipType ID="F12.Wren.Monitoring.Stores.DistributedApplicationContainsCentralGroup" Base="System!System.Containment" Abstract="false" Accessibility="Internal">
 						<Source ID="Source" Type="F12.Wren.Monitoring.Stores.DistributedApplication"/>
 						<Target ID="Target" Type="F12.Wren.Monitoring.Stores.Central.Group"/>
 					</RelationshipType>
-
+					<!-- Distributed Application Contains All Stores Group -->
 					<RelationshipType ID="F12.Wren.Monitoring.Stores.DistributedApplicationContainsAllStoresGroup" Base="System!System.Containment" Abstract="false" Accessibility="Internal">
 						<Source ID="Source" Type="F12.Wren.Monitoring.Stores.DistributedApplication"/>
 						<Target ID="Target" Type="F12.Wren.Monitoring.Stores.AllStores.Group"/>
 					</RelationshipType>
 
 
+					<!-- All Stores Group Contains Servers -->
 					<RelationshipType ID="F12.Wren.Monitoring.Stores.StoresContainsStoreServer" Base="System!System.Containment" Abstract="false" Accessibility="Internal">
 						<Source ID="Source" Type="F12.Wren.Monitoring.Stores.AllStores.Group"/>
 						<Target ID="Target" Type="F12.Wren.Monitoring.Stores.ComputerRole.StoreServer"/>
 					</RelationshipType>
 
+					<!-- All Stores Group Contains Clients -->
 					<RelationshipType ID="F12.Wren.Monitoring.Stores.StoresContainsStoreClient" Base="System!System.Containment" Abstract="false" Accessibility="Internal">
 						<Source ID="Source" Type="F12.Wren.Monitoring.Stores.AllStores.Group"/>
 						<Target ID="Target" Type="F12.Wren.Monitoring.Stores.ComputerRole.StoreClient"/>
@@ -50,8 +55,86 @@
 				</RelationshipTypes>
 				
 			</EntityTypes>
+	
 		</TypeDefinitions>
-		<LanguagePacks>
+
+	<Monitoring>
+		<Discoveries>
+			<!-- DISTRIBUTED APPLICATION CONTAINS ALL STORES GROUP AND CENTRAL SERVERS GROUP-->
+			<Discovery ID="F12.Wren.Monitoring.Stores.DistributedApplicationContainsCentralGroup.GroupPopulator" Target="F12.Wren.Monitoring.Stores.DistributedApplication" Enabled="true" Priority="Normal" Remotable="true">
+				<Category>Discovery</Category>
+				<DiscoveryTypes>
+					<DiscoveryRelationship TypeID="MSIL!Microsoft.SystemCenter.InstanceGroupContainsEntities"></DiscoveryRelationship>
+				</DiscoveryTypes>
+				<DataSource ID="DS" TypeID="SC!Microsoft.SystemCenter.GroupPopulator">
+					<RuleId>$MPElement$</RuleId>
+					<GroupInstanceId>$Target/Id$</GroupInstanceId>
+					<MembershipRules>
+						<MembershipRule>
+							<MonitoringClass>$MPElement[Name="F12.Wren.Monitoring.Stores.Central.Group"]$</MonitoringClass>
+							<RelationshipClass>$MPElement[Name="F12.Wren.Monitoring.Stores.DistributedApplicationContainsCentralGroup"]$</RelationshipClass>
+						</MembershipRule>
+						<MembershipRule>
+							<MonitoringClass>$MPElement[Name="F12.Wren.Monitoring.Stores.AllStores.Group"]$</MonitoringClass>
+							<RelationshipClass>$MPElement[Name="F12.Wren.Monitoring.Stores.DistributedApplicationContainsAllStoresGroup"]$</RelationshipClass>
+						</MembershipRule>
+					</MembershipRules>
+				</DataSource>
+			</Discovery>
+
+			<!-- ALL STORES CONTAINS STORES and CLIENT GROUPS -->
+			<Discovery ID="F12.Wren.Monitoring.Stores.AllStores.Group.GroupPopulator" Target="F12.Wren.Monitoring.Stores.AllStores.Group" Enabled="true" Priority="Normal" Remotable="true">
+				<Category>Discovery</Category>
+				<DiscoveryTypes>
+					<DiscoveryRelationship TypeID="MSIL!Microsoft.SystemCenter.InstanceGroupContainsEntities"></DiscoveryRelationship>
+				</DiscoveryTypes>
+				<DataSource ID="DS" TypeID="SC!Microsoft.SystemCenter.GroupPopulator">
+					<RuleId>$MPElement$</RuleId>
+					<GroupInstanceId>$Target/Id$</GroupInstanceId>
+					<MembershipRules>
+						<MembershipRule>
+							<MonitoringClass>$MPElement[Name="F12.Wren.Monitoring.Stores.ComputerRole.StoreClient"]$</MonitoringClass>
+							<RelationshipClass>$MPElement[Name="F12.Wren.Monitoring.Stores.StoresContainsStoreClient"]$</RelationshipClass>
+						</MembershipRule>
+						<MembershipRule>
+							<MonitoringClass>$MPElement[Name="F12.Wren.Monitoring.Stores.ComputerRole.StoreServer"]$</MonitoringClass>
+							<RelationshipClass>$MPElement[Name="F12.Wren.Monitoring.Stores.StoresContainsStoreServer"]$</RelationshipClass>
+						</MembershipRule>
+					</MembershipRules>
+				</DataSource>
+			</Discovery>
+
+			<!-- CENTRAL CONTAINS PROCESSOR AND RECEIVER-->
+			<Discovery ID="F12.Wren.Monitoring.Stores.Central.Group.GroupPopulator" Target="F12.Wren.Monitoring.Stores.Central.Group" Enabled="true" Priority="Normal" Remotable="true">
+				<Category>Discovery</Category>
+				<DiscoveryTypes>
+					<DiscoveryRelationship TypeID="MSIL!Microsoft.SystemCenter.InstanceGroupContainsEntities"></DiscoveryRelationship>
+				</DiscoveryTypes>
+				<DataSource ID="DS" TypeID="SC!Microsoft.SystemCenter.GroupPopulator">
+					<RuleId>$MPElement$</RuleId>
+					<GroupInstanceId>$Target/Id$</GroupInstanceId>
+					<MembershipRules>
+						<MembershipRule>
+							<MonitoringClass>$MPElement[Name="F12.Wren.Monitoring.Stores.ComputerRole.CentralProcessor"]$</MonitoringClass>
+							<RelationshipClass>$MPElement[Name="F12.Wren.Stores.Monitoring.CentralContainsCentralProcessor"]$</RelationshipClass>
+						</MembershipRule>
+						<MembershipRule>
+							<MonitoringClass>$MPElement[Name="F12.Wren.Monitoring.Stores.ComputerRole.CentralReceiver"]$</MonitoringClass>
+							<RelationshipClass>$MPElement[Name="F12.Wren.Stores.Monitoring.CentralContainsCentralReceiver"]$</RelationshipClass>
+						</MembershipRule>
+						<MembershipRule>
+							<MonitoringClass>$MPElement[Name="F12.Wren.Monitoring.WebSites.Group"]$</MonitoringClass>
+							<RelationshipClass>$MPElement[Name="F12.Wren.Monitoring.CentralGroupContainsWebsites"]$</RelationshipClass>
+						</MembershipRule>
+					</MembershipRules>
+				</DataSource>
+			</Discovery>
+
+		</Discoveries>
+	</Monitoring>
+	
+	
+	<LanguagePacks>
 			<LanguagePack ID="ENU" IsDefault="true">
 				<DisplayStrings>
 					<!-- CLASSES -->
@@ -105,7 +188,23 @@
 						<Name>F12.Wren.Stores.Monitoring.CentralContainsCentralReceiver</Name>
 						<Description></Description>
 					</DisplayString>
-					
+
+					<!-- DISCOVERIES -->
+					<DisplayString ElementID="F12.Wren.Monitoring.Stores.DistributedApplicationContainsCentralGroup.GroupPopulator">
+						<Name>F12 - Group Populator - Distribution Application Group</Name>
+						<Description></Description>
+					</DisplayString>
+
+					<DisplayString ElementID="F12.Wren.Monitoring.Stores.AllStores.Group.GroupPopulator">
+						<Name>F12 - Group Populator - All Stores Group</Name>
+						<Description></Description>
+					</DisplayString>
+
+
+					<DisplayString ElementID="F12.Wren.Monitoring.Stores.Central.Group.GroupPopulator">
+						<Name>F12 - Group Populator - Central Servers Group</Name>
+						<Description></Description>
+					</DisplayString>
 
 				</DisplayStrings>
 			</LanguagePack>

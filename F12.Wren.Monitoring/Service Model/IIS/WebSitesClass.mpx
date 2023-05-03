@@ -24,6 +24,39 @@
 		</RelationshipTypes>
     </EntityTypes>
   </TypeDefinitions>
+
+	<Monitoring>
+		<Discoveries>
+			<Discovery ID="F12.Wren.Monitoring.WebSitesGroupContainWebSites.GroupPopulator" Target="F12.Wren.Monitoring.WebSites.Group" Enabled="true" Priority="Normal" Remotable="true" >
+				<Category>Discovery</Category>
+				<DiscoveryTypes>
+					<DiscoveryRelationship TypeID="MSIL!Microsoft.SystemCenter.InstanceGroupContainsEntities"></DiscoveryRelationship>
+				</DiscoveryTypes>
+				<DataSource ID="DS" TypeID="SC!Microsoft.SystemCenter.GroupPopulator">
+					<RuleId>$MPElement$</RuleId>
+					<GroupInstanceId>$Target/Id$</GroupInstanceId>
+					<MembershipRules>
+						<MembershipRule>
+							<MonitoringClass>$MPElement[Name="MWI2!Microsoft.Windows.InternetInformationServices.10.0.WebSite"]$</MonitoringClass>
+							<RelationshipClass>$MPElement[Name="F12.Wren.Monitoring.WebSitesGroupContainWebSites"]$</RelationshipClass>
+							<Expression>
+								<SimpleExpression>
+									<ValueExpression>
+										<Property>$MPElement[Name="MWIC!Microsoft.Windows.InternetInformationServices.WebSite"]/Description$</Property>
+									</ValueExpression>
+										<Operator>Equal</Operator>
+									<ValueExpression>
+										<Value>Stores</Value>
+									</ValueExpression>
+								</SimpleExpression>
+							</Expression>
+						</MembershipRule>
+					</MembershipRules>
+				</DataSource>
+			</Discovery>
+		</Discoveries>
+	</Monitoring>
+	
   <LanguagePacks>
     <LanguagePack ID="ENU" IsDefault="true">
       <DisplayStrings>
