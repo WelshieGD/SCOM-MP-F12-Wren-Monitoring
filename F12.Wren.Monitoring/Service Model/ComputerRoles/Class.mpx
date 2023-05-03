@@ -26,6 +26,7 @@
 				<ClassType ID="F12.Wren.Monitoring.Stores.ComputerRole.CentralServer" Base="F12.Wren.Monitoring.Stores.ComputerRole" Accessibility="Public" Abstract="true" Hosted="true">
 				</ClassType>
 				<ClassType ID="F12.Wren.Monitoring.Stores.ComputerRole.CentralReceiver" Base="F12.Wren.Monitoring.Stores.ComputerRole.CentralServer" Accessibility="Public" Abstract="false" Hosted="true">
+					<Property ID="InstallPath" Key="false" Type="string"/>
 				</ClassType>
 				<ClassType ID="F12.Wren.Monitoring.Stores.ComputerRole.CentralProcessor" Base="F12.Wren.Monitoring.Stores.ComputerRole.CentralServer" Accessibility="Public" Abstract="false" Hosted="true">
 					<Property ID="QueuePath" Key="false" Type="string"/>
@@ -69,6 +70,12 @@
 					<Name>F12 Stores - Central Receiver</Name>
 					<Description></Description>
 				</DisplayString>
+				<DisplayString ElementID="F12.Wren.Monitoring.Stores.ComputerRole.CentralReceiver" SubElementID="InstallPath">
+					<Name>Install Path</Name>
+					<Description></Description>
+				</DisplayString>
+				
+				
 				<DisplayString ElementID="F12.Wren.Monitoring.Stores.ComputerRole.CentralProcessor">
 					<Name>F12 Stores - Central Processor</Name>
 					<Description></Description>

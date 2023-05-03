@@ -65,7 +65,7 @@ Values 1, 2, and 3 are used only when the PathType is set to 1.
 			<Discovery ID="F12.Wren.Monitoring.Stores.ComputerRole.CentralProcessor.Discovery" Target="F12.Wren.Monitoring.Stores.Seed" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal">
 				<Category>Discovery</Category>
 				<DiscoveryTypes>
-					<DiscoveryClass TypeID="F12.Wren.Monitoring.Stores.ComputerRole" />
+					<DiscoveryClass TypeID="F12.Wren.Monitoring.Stores.ComputerRole.CentralProcessor" />
 				</DiscoveryTypes>
 				<DataSource ID="DS" TypeID="Windows!Microsoft.Windows.FilteredRegistryDiscoveryProvider">
 					<ComputerName>$Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</ComputerName>

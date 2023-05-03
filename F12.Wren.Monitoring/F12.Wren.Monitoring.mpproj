@@ -87,6 +87,9 @@
     <Compile Include="Service Model\ComputerRoles\DiscoverCompyuterRoles.mpx">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Service Model\ComputerRoles\WMI_DiscoverCentralReceiver.mpx">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Service Model\DistributedApplication\Classes.mpx">
       <SubType>Code</SubType>
     </Compile>
