@@ -95,6 +95,10 @@
     <Compile Include="Service Model\DistributedApplication\Classes.mpx">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Service Model\GetServersAndClientsByStoreCode\DiscoverStores.mptg.mpx">
+      <SubType>Code</SubType>
+      <DependentUpon>Service Model\GetServersAndClientsByStoreCode\DiscoverStores.mptg</DependentUpon>
+    </Compile>
     <Compile Include="Service Model\IIS\WebSitesClass.mpx">
       <SubType>Code</SubType>
     </Compile>
@@ -105,13 +109,19 @@
     <Folder Include="Service Model\ApplicationComponent" />
     <Folder Include="Service Model\DistributedApplication" />
     <Folder Include="Service Model\IIS" />
+    <Folder Include="Service Model\GetServersAndClientsByStoreCode" />
     <Folder Include="Service Model\SQL" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Service Model\ApplicationComponent\DiscoverQueues.ps1" />
+    <EmbeddedResource Include="Service Model\GetServersAndClientsByStoreCode\GetServersAndClientsByStoreCode.ps1" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Service Model\ApplicationComponent\DiscoverQueue.mptg">
+      <SubType>Content</SubType>
+      <Generator>FragmentGenerator</Generator>
+    </Content>
+    <Content Include="Service Model\GetServersAndClientsByStoreCode\DiscoverStores.mptg">
       <SubType>Content</SubType>
       <Generator>FragmentGenerator</Generator>
     </Content>

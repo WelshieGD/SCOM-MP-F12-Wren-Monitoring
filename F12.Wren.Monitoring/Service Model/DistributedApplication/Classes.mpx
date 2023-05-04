@@ -9,7 +9,7 @@
 					<ClassType ID="F12.Wren.Monitoring.Stores.Central.Group" Base="System!System.Group" Abstract="false" Hosted="false" Accessibility="Public" Singleton="true"/>
 					<ClassType ID="F12.Wren.Monitoring.Stores.AllStores.Group" Base="System!System.Group" Abstract="false" Hosted="false" Accessibility="Public" Singleton="true"/>
 
-					
+					<!-- Stores Application Component-->
 					<ClassType ID="F12.Wren.Monitoring.Stores.Store" Base="System!System.ApplicationComponent" Abstract="false" Hosted="false" Accessibility="Public" Singleton="false">
 						<!-- Unhosted but not a singleton so can have multiple instances ==> so needs to have key property -->
 						<Property ID="StoreCode" Key="true" Type="string"/>
@@ -29,24 +29,32 @@
 						<Target ID="Target" Type="F12.Wren.Monitoring.Stores.AllStores.Group"/>
 					</RelationshipType>
 
+					<!-- Stores Group Contains Store Application Component ADDED Advanced Discovery-->
+					<RelationshipType ID="F12.Wren.Monitoring.Stores.StoresContainsStore" Base="System!System.Containment" Abstract="false" Accessibility="Internal">
+						<Source ID="Source" Type="F12.Wren.Monitoring.Stores.AllStores.Group"/>
+						<Target ID="Target" Type="F12.Wren.Monitoring.Stores.Store"/>
+					</RelationshipType>
 
 					<!-- All Stores Group Contains Servers -->
 					<RelationshipType ID="F12.Wren.Monitoring.Stores.StoresContainsStoreServer" Base="System!System.Containment" Abstract="false" Accessibility="Internal">
-						<Source ID="Source" Type="F12.Wren.Monitoring.Stores.AllStores.Group"/>
+						<Source ID="Source" Type="F12.Wren.Monitoring.Stores.Store"/>
 						<Target ID="Target" Type="F12.Wren.Monitoring.Stores.ComputerRole.StoreServer"/>
 					</RelationshipType>
 
 					<!-- All Stores Group Contains Clients -->
 					<RelationshipType ID="F12.Wren.Monitoring.Stores.StoresContainsStoreClient" Base="System!System.Containment" Abstract="false" Accessibility="Internal">
-						<Source ID="Source" Type="F12.Wren.Monitoring.Stores.AllStores.Group"/>
+						<Source ID="Source" Type="F12.Wren.Monitoring.Stores.Store"/>
 						<Target ID="Target" Type="F12.Wren.Monitoring.Stores.ComputerRole.StoreClient"/>
 					</RelationshipType>
 
+					
+
+					<!-- Central Contains Processor-->
 					<RelationshipType ID="F12.Wren.Stores.Monitoring.CentralContainsCentralProcessor" Base="System!System.Containment" Abstract="false" Accessibility="Internal">
 						<Source ID="Source" Type="F12.Wren.Monitoring.Stores.Central.Group"/>
 						<Target ID="Target" Type="F12.Wren.Monitoring.Stores.ComputerRole.CentralProcessor"/>
 					</RelationshipType>
-
+					<!-- Central Contains Receiver -->
 					<RelationshipType ID="F12.Wren.Stores.Monitoring.CentralContainsCentralReceiver" Base="System!System.Containment" Abstract="false" Accessibility="Internal">
 						<Source ID="Source" Type="F12.Wren.Monitoring.Stores.Central.Group"/>
 						<Target ID="Target" Type="F12.Wren.Monitoring.Stores.ComputerRole.CentralReceiver"/>
@@ -93,12 +101,8 @@
 					<GroupInstanceId>$Target/Id$</GroupInstanceId>
 					<MembershipRules>
 						<MembershipRule>
-							<MonitoringClass>$MPElement[Name="F12.Wren.Monitoring.Stores.ComputerRole.StoreClient"]$</MonitoringClass>
-							<RelationshipClass>$MPElement[Name="F12.Wren.Monitoring.Stores.StoresContainsStoreClient"]$</RelationshipClass>
-						</MembershipRule>
-						<MembershipRule>
-							<MonitoringClass>$MPElement[Name="F12.Wren.Monitoring.Stores.ComputerRole.StoreServer"]$</MonitoringClass>
-							<RelationshipClass>$MPElement[Name="F12.Wren.Monitoring.Stores.StoresContainsStoreServer"]$</RelationshipClass>
+							<MonitoringClass>$MPElement[Name="F12.Wren.Monitoring.Stores.Store"]$</MonitoringClass>
+							<RelationshipClass>$MPElement[Name="F12.Wren.Monitoring.Stores.StoresContainsStore"]$</RelationshipClass>
 						</MembershipRule>
 					</MembershipRules>
 				</DataSource>
