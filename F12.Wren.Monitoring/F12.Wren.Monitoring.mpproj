@@ -71,8 +71,27 @@
       <Alias>Visualization</Alias>
       <PackageToBundle>false</PackageToBundle>
     </ManagementPackReference>
+    <ManagementPackReference Include="System.Performance.Library">
+      <HintPath>C:\Program Files (x86)\System Center Visual Studio Authoring Extensions\References\OM2016\System.Performance.Library.mp</HintPath>
+      <Alias>Perf</Alias>
+      <MinVersion>7.0.8437.0</MinVersion>
+    </ManagementPackReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Health Model\UnitMonitors\Performance.mptg.mpx">
+      <SubType>Code</SubType>
+      <DependentUpon>Health Model\UnitMonitors\Performance.mptg</DependentUpon>
+    </Compile>
+    <Compile Include="Health Model\UnitMonitors\PerformanceKnowledge.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Health Model\UnitMonitors\ServiceMonitors.mptg.mpx">
+      <SubType>Code</SubType>
+      <DependentUpon>Health Model\UnitMonitors\ServiceMonitors.mptg</DependentUpon>
+    </Compile>
+    <Compile Include="Health Model\UnitMonitors\ServiceMonitorsKnowledge.mpx">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ManagementPack.mpx">
       <SubType>Code</SubType>
     </Compile>
@@ -104,6 +123,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Health Model" />
+    <Folder Include="Health Model\UnitMonitors" />
     <Folder Include="Service Model" />
     <Folder Include="Service Model\ComputerRoles" />
     <Folder Include="Service Model\ApplicationComponent" />
@@ -117,6 +138,14 @@
     <EmbeddedResource Include="Service Model\GetServersAndClientsByStoreCode\GetServersAndClientsByStoreCode.ps1" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Health Model\UnitMonitors\Performance.mptg">
+      <SubType>Content</SubType>
+      <Generator>FragmentGenerator</Generator>
+    </Content>
+    <Content Include="Health Model\UnitMonitors\ServiceMonitors.mptg">
+      <SubType>Content</SubType>
+      <Generator>FragmentGenerator</Generator>
+    </Content>
     <Content Include="Service Model\ApplicationComponent\DiscoverQueue.mptg">
       <SubType>Content</SubType>
       <Generator>FragmentGenerator</Generator>

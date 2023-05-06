@@ -1,0 +1,59 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<LanguagePacks>
+		<LanguagePack ID="ENU" IsDefault="true">
+			<KnowledgeArticles>
+				<KnowledgeArticle ElementID="F12.Wren.Store.Monitor.Unit.Service.wmiApSrv.ServiceRunning" Visible="true">
+					<MamlContent>
+						<maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+							<maml:title>Summary</maml:title>
+							<maml:para>The wmiApSrv Service is not running.</maml:para>
+						</maml:section>
+						<maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+							<maml:title>Causes</maml:title>
+							<maml:para>Can fail when x happens. </maml:para>
+						</maml:section>
+						<maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+							<maml:title>Resolutions</maml:title>
+							<maml:para>Start the service and grab some coffee.</maml:para>
+						</maml:section>
+					</MamlContent>
+				</KnowledgeArticle>
+
+				<KnowledgeArticle ElementID="F12.Wren.CentralProcessor.Monitor.Unit.Service.wmiApSrv.ServiceRunning" Visible="true">
+					<MamlContent>
+						<maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+							<maml:title>Summary</maml:title>
+							<maml:para>The wmiApSrv Service is not running.</maml:para>
+						</maml:section>
+						<maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+							<maml:title>Causes</maml:title>
+							<maml:para>Can fail when x happens. </maml:para>
+						</maml:section>
+						<maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+							<maml:title>Resolutions</maml:title>
+							<maml:para>Start the service and grab some coffee.</maml:para>
+						</maml:section>
+					</MamlContent>
+				</KnowledgeArticle>
+
+				<KnowledgeArticle ElementID="F12.Wren.CentralReceiver.Monitor.Unit.Service.wmiApSrv.ServiceRunning" Visible="true">
+					<MamlContent>
+						<maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+							<maml:title>Summary</maml:title>
+							<maml:para>The wmiApSrv Service is not running.</maml:para>
+						</maml:section>
+						<maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+							<maml:title>Causes</maml:title>
+							<maml:para>Can fail when x happens. </maml:para>
+						</maml:section>
+						<maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+							<maml:title>Resolutions</maml:title>
+							<maml:para>Start the service and grab some coffee.</maml:para>
+						</maml:section>
+					</MamlContent>
+				</KnowledgeArticle>
+				
+			</KnowledgeArticles>
+		</LanguagePack>
+	</LanguagePacks>
+</ManagementPackFragment>

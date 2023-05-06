@@ -1,0 +1,27 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<LanguagePacks>
+		<LanguagePack ID="ENU" IsDefault="true">
+			<KnowledgeArticles>
+				<KnowledgeArticle ElementID="F12.Wren.Spooler.Monitor.Unit.Perf.PercentCPU" Visible="true">
+					<MamlContent>
+						<maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+							<maml:title>Summary</maml:title>
+							<maml:para>Spooler service is consuming way toooo much CPU.</maml:para>
+						</maml:section>
+						<maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+							<maml:title>Causes</maml:title>
+							<maml:para>Too much coffee and sugar </maml:para>
+						</maml:section>
+						<maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+							<maml:title>Resolutions</maml:title>
+							<maml:para>Hide the coffee machiine.</maml:para>
+						</maml:section>
+					</MamlContent>
+				</KnowledgeArticle>
+
+
+
+			</KnowledgeArticles>
+		</LanguagePack>
+	</LanguagePacks>
+</ManagementPackFragment>

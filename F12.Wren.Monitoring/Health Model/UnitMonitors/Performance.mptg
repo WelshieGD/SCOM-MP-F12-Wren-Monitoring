@@ -1,0 +1,41 @@
+<TemplateGroup>
+  <Instances>
+    <Instance ID="Instance1cb8bbbf42bb4bd8ba0ce5a2d4aaa2da" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <MonitorType>Perf!System.Performance.ConsecutiveSamplesThreshold</MonitorType>
+        <MonitorConfig>&lt;ComputerName&gt;$Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$&lt;/ComputerName&gt;&lt;CounterName&gt;% Processor Time&lt;/CounterName&gt;&lt;ObjectName&gt;Process&lt;/ObjectName&gt;&lt;InstanceName&gt;Spooler&lt;/InstanceName&gt;&lt;AllInstances&gt;false&lt;/AllInstances&gt;&lt;Frequency&gt;300&lt;/Frequency&gt;&lt;Threshold&gt;80&lt;/Threshold&gt;&lt;Direction&gt;greater&lt;/Direction&gt;&lt;NumSamples&gt;1&lt;/NumSamples&gt;</MonitorConfig>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>ConditionTrue</OperationalStateId>
+            <OperationalStateDisplayName>Over threshold</OperationalStateDisplayName>
+            <MonitorTypeStateId>ConditionTrue</MonitorTypeStateId>
+            <HealthState>Warning</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>ConditionFalse</OperationalStateId>
+            <OperationalStateDisplayName>Under Threshold</OperationalStateDisplayName>
+            <MonitorTypeStateId>ConditionFalse</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <ParentMonitor>Health!System.Health.PerformanceState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>Spooler.Monitor.Unit.Perf.PercentCPU</Id>
+        <DisplayName>Spooler % Processor</DisplayName>
+        <Description>Description for the new unit monitor.</Description>
+        <Target>F12.Wren.Monitoring.Stores.ComputerRole.CentralReceiver</Target>
+        <Enabled>true</Enabled>
+        <Category>PerformanceHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Error</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>Spooler % Processor over threshold</AlertName>
+        <AlertDescription>Spooler CPU usage over threshold on server $Target/Host/Property[Type='Windows!Microsoft.Windows.Computer']/PrincipalName$</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+  </Instances>
+</TemplateGroup>
