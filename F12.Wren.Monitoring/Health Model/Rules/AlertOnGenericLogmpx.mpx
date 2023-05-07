@@ -1,0 +1,103 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!-- 
+  ##LogFileDirectory##
+  ##LogFilePattern##
+  ##StringToMatch##
+-->
+	
+	<Monitoring>
+		<Rules>
+			<Rule ID="F12.Wren.Monitoring.LogFile.Alert.Rule.StringMatch" Enabled="true" Target="F12.Wren.Monitoring.Stores.ComputerRole.CentralProcessor" ConfirmDelivery="true" Remotable="true" Priority="Normal" DiscardLevel="100">
+				<Category>Alert</Category>
+				<DataSources>
+					<DataSource ID="DS" TypeID="SAL!System.ApplicationLog.GenericLog.FilteredEventProvider">
+						<LogFileDirectory>##LogFileDirectory##</LogFileDirectory>
+						<LogFilePattern>##LogFilePattern##</LogFilePattern>
+						<LogIsUTF8>false</LogIsUTF8>
+						<Expression>
+							<RegExExpression>
+								<ValueExpression>
+									<XPathQuery Type="String">Params/Param[1]</XPathQuery>
+								</ValueExpression>
+								<Operator>ContainsSubstring</Operator>
+								<!-- Common options for RegExExpression Operator are "MatchesWildcard" "ContainsSubstring" "MatchesRegularExpression" "DoesNotMatchWildcard" "DoesNotContainSubstring" "DoesNotMatchRegularExpression" -->
+								<Pattern>##StringToMatch##</Pattern>
+								<!-- This can be a string value to match on or a Regex expression or a wildcard with #?*\ -->
+							</RegExExpression>
+						</Expression>
+					</DataSource>
+				</DataSources>
+				<WriteActions>
+					<WriteAction ID="Alert" TypeID="Health!System.Health.GenerateAlert">
+						<Priority>1</Priority>
+						<!--0=Low 1=Medium 2=High -->
+						<Severity>1</Severity>
+						<!--0=Information 1=Warning 2=Critical -->
+						<AlertOwner />
+						<AlertMessageId>$MPElement[Name="F12.Wren.Monitoring.LogFile.Alert.Rule.StringMatch.AlertMessage"]$</AlertMessageId>
+						<AlertParameters>
+							<AlertParameter1>$Data/EventData/DataItem/LogFileDirectory$</AlertParameter1>
+							<AlertParameter2>$Data/EventData/DataItem/LogFileName$</AlertParameter2>
+							<AlertParameter3>$Data/EventData/DataItem/Params/Param[1]$</AlertParameter3>
+						</AlertParameters>
+						<Suppression>
+							<SuppressionValue>$Data/LoggingComputer$</SuppressionValue>
+							<SuppressionValue>$Data/Params/Param[1]$</SuppressionValue>
+						</Suppression>
+						<Custom1 />
+						<Custom2 />
+						<Custom3 />
+						<Custom4 />
+						<Custom5 />
+						<Custom6 />
+						<Custom7 />
+						<Custom8 />
+						<Custom9 />
+						<Custom10 />
+					</WriteAction>
+				</WriteActions>
+			</Rule>
+		</Rules>
+	</Monitoring>
+	<Presentation>
+		<StringResources>
+			<StringResource ID="F12.Wren.Monitoring.LogFile.Alert.Rule.StringMatch.AlertMessage" />
+		</StringResources>
+	</Presentation>
+	<LanguagePacks>
+		<LanguagePack ID="ENU" IsDefault="true">
+			<DisplayStrings>
+				<DisplayString ElementID="F12.Wren.Monitoring.LogFile.Alert.Rule.StringMatch">
+					<Name>F12 Wren Monitoring Logfile Alert Rule</Name>
+				</DisplayString>
+				<DisplayString ElementID="F12.Wren.Monitoring.LogFile.Alert.Rule.StringMatch.AlertMessage">
+					<Name>F12 Wren Monitoring Logfile String Match</Name>
+					<Description>
+						A matching error string of - ##StringToMatch## - was found in the log file:
+						Logfile Directory: {0}
+						Logfile Name: {1}
+						Message: {2}
+					</Description>
+				</DisplayString>
+			</DisplayStrings>
+			<KnowledgeArticles>
+				<KnowledgeArticle ElementID="F12.Wren.Monitoring.LogFile.Alert.Rule.StringMatch" Visible="true">
+					<MamlContent>
+						<maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+							<maml:title>Summary</maml:title>
+							<maml:para>Backup Failed.</maml:para>
+						</maml:section>
+						<maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+							<maml:title>Causes</maml:title>
+							<maml:para>Something went wrong</maml:para>
+						</maml:section>
+						<maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+							<maml:title>Resolutions</maml:title>
+							<maml:para>Phone support</maml:para>
+						</maml:section>
+					</MamlContent>
+				</KnowledgeArticle>
+			</KnowledgeArticles>
+		</LanguagePack>
+	</LanguagePacks>
+</ManagementPackFragment>

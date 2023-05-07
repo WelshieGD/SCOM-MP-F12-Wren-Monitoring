@@ -59,6 +59,12 @@
       <Alias>Windows</Alias>
       <PackageToBundle>false</PackageToBundle>
     </ManagementPackReference>
+    <ManagementPackReference Include="System.ApplicationLog.Library">
+      <HintPath>C:\Program Files (x86)\System Center Visual Studio Authoring Extensions\References\OM2016\System.ApplicationLog.Library.mp</HintPath>
+      <Alias>SAL</Alias>
+      <MinVersion>7.0.8437.0</MinVersion>
+      <PackageToBundle>False</PackageToBundle>
+    </ManagementPackReference>
     <ManagementPackReference Include="System.Health.Library">
       <Alias>Health</Alias>
       <PackageToBundle>false</PackageToBundle>
@@ -78,6 +84,18 @@
     </ManagementPackReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Health Model\Rules\AlertOnEvent.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Health Model\Rules\AlertOnEventOrEventOrEvent.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Health Model\Rules\AlertOnGenericLogmpx.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Health Model\Rules\AlertOnLog.mpx">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Health Model\UnitMonitors\EventLog2State.mptg.mpx">
       <SubType>Code</SubType>
       <DependentUpon>Health Model\UnitMonitors\EventLog2State.mptg</DependentUpon>
@@ -131,6 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Health Model" />
+    <Folder Include="Health Model\Rules" />
     <Folder Include="Health Model\UnitMonitors" />
     <Folder Include="Service Model" />
     <Folder Include="Service Model\ComputerRoles" />

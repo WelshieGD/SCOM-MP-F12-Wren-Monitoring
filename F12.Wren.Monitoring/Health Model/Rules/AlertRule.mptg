@@ -1,0 +1,31 @@
+<TemplateGroup>
+  <Instances>
+    <Instance ID="Instancedc1d6d1689744195bf3c3eaa5b8ccf2b" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.AlertRule" Version="1.0.0.0">
+      <AlertRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Rule.Alert.302</Id>
+        <DisplayName>Central Processor Event 302</DisplayName>
+        <Description>Description for the new alert rule.</Description>
+        <Category>Alert</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>F12.Wren.Monitoring.Stores.ComputerRole.CentralProcessor</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <DataSources>
+          <RuleDataSourceItem>
+            <DataSourceId>DS</DataSourceId>
+            <DataSourceConfig>&lt;ComputerName&gt;$Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$&lt;/ComputerName&gt;&lt;LogName&gt;Application&lt;/LogName&gt;&lt;Expression&gt;&lt;And&gt;&lt;Expression&gt;&lt;SimpleExpression&gt;&lt;ValueExpression&gt;&lt;XPathQuery Type="UnsignedInteger"&gt;EventDisplayNumber&lt;/XPathQuery&gt;&lt;/ValueExpression&gt;&lt;Operator&gt;Equal&lt;/Operator&gt;&lt;ValueExpression&gt;&lt;Value Type="UnsignedInteger"&gt;302&lt;/Value&gt;&lt;/ValueExpression&gt;&lt;/SimpleExpression&gt;&lt;/Expression&gt;&lt;Expression&gt;&lt;SimpleExpression&gt;&lt;ValueExpression&gt;&lt;XPathQuery Type="String"&gt;PublisherName&lt;/XPathQuery&gt;&lt;/ValueExpression&gt;&lt;Operator&gt;Equal&lt;/Operator&gt;&lt;ValueExpression&gt;&lt;Value Type="String"&gt;EventCreate&lt;/Value&gt;&lt;/ValueExpression&gt;&lt;/SimpleExpression&gt;&lt;/Expression&gt;&lt;/And&gt;&lt;/Expression&gt;</DataSourceConfig>
+            <DataSourceType>Windows!Microsoft.Windows.EventProvider</DataSourceType>
+          </RuleDataSourceItem>
+        </DataSources>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <ConditionDetectionType />
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>Error</AlertSeverity>
+        <AlertName>Central Processor Event 302</AlertName>
+        <AlertDescription>$Data/EventDescription$</AlertDescription>
+      </AlertRuleConfig>
+    </Instance>
+  </Instances>
+</TemplateGroup>

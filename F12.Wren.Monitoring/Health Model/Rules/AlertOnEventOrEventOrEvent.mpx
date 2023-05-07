@@ -1,0 +1,158 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<Monitoring>
+		<Rules>
+		<Rule ID="F12.Wren.Monitoring.Rule.Alert.WindowsEvent741742743" Enabled="true" Target="F12.Wren.Monitoring.Stores.ComputerRole.CentralProcessor" ConfirmDelivery="true" Remotable="true" Priority="Normal" DiscardLevel="100">
+			<Category>Alert</Category>
+			<DataSources>
+				<DataSource ID="DS" TypeID="Windows!Microsoft.Windows.EventProvider">
+					<ComputerName>$Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</ComputerName>
+					<LogName>Application</LogName>
+					<Expression>
+						<Or>
+							<Expression>
+								<SimpleExpression>
+									<ValueExpression>
+										<XPathQuery Type="UnsignedInteger">EventDisplayNumber</XPathQuery>
+									</ValueExpression>
+									<Operator>Equal</Operator>
+									<ValueExpression>
+										<Value Type="UnsignedInteger">741</Value>
+									</ValueExpression>
+								</SimpleExpression>
+							</Expression>
+							<Expression>
+								<SimpleExpression>
+									<ValueExpression>
+										<XPathQuery Type="UnsignedInteger">EventDisplayNumber</XPathQuery>
+									</ValueExpression>
+									<Operator>Equal</Operator>
+									<ValueExpression>
+										<Value Type="UnsignedInteger">742</Value>
+									</ValueExpression>
+								</SimpleExpression>
+							</Expression>
+							<Expression>
+								<SimpleExpression>
+									<ValueExpression>
+										<XPathQuery Type="UnsignedInteger">EventDisplayNumber</XPathQuery>
+									</ValueExpression>
+									<Operator>Equal</Operator>
+									<ValueExpression>
+										<Value Type="UnsignedInteger">743</Value>
+									</ValueExpression>
+								</SimpleExpression>
+							</Expression>
+							<Expression>
+								<And>
+									<Expression>
+										<SimpleExpression>
+											<ValueExpression>
+												<XPathQuery Type="String">PublisherName</XPathQuery>
+											</ValueExpression>
+											<Operator>Equal</Operator>
+											<ValueExpression>
+												<Value Type="String">EventCreate</Value>
+											</ValueExpression>
+										</SimpleExpression>
+									</Expression>
+									<Expression>
+										<SimpleExpression>
+											<ValueExpression>
+												<XPathQuery Type="Integer">EventLevel</XPathQuery>
+											</ValueExpression>
+											<Operator>Equal</Operator>
+											<ValueExpression>
+												<Value Type="Integer">1</Value>
+											</ValueExpression>
+										</SimpleExpression>
+									</Expression>
+								</And>
+							</Expression>
+						</Or>
+					</Expression>
+				</DataSource>
+			</DataSources>
+			<ConditionDetection ID="CD" TypeID="System!System.ConsolidatorCondition">
+				<Consolidator>
+					<ConsolidationProperties />
+					<TimeControl>
+						<WithinTimeSchedule>
+							<Interval>60</Interval>
+							<!-- seconds -->
+						</WithinTimeSchedule>
+					</TimeControl>
+					<CountingCondition>
+						<Count>1</Count>
+						<!-- how many events to look for in given time period -->
+						<CountMode>OnNewItemTestOutputRestart_OnTimerSlideByOne</CountMode>
+					</CountingCondition>
+				</Consolidator>
+			</ConditionDetection>
+			<WriteActions>
+				<WriteAction ID="Alert" TypeID="Health!System.Health.GenerateAlert">
+					<Priority>1</Priority>
+					<Severity>2</Severity>
+					<AlertName />
+					<AlertDescription />
+					<AlertOwner />
+					<AlertMessageId>$MPElement[Name="F12.Wren.Monitoring.Rule.Alert.WindowsEvent741742743.AlertMessage"]$</AlertMessageId>
+					<AlertParameters>
+						<AlertParameter1>$Data[Default='']/EventDescription$</AlertParameter1>
+					</AlertParameters>
+					<Suppression>
+						<SuppressionValue>$Data/EventDisplayNumber$</SuppressionValue>
+						<SuppressionValue>$Data/LoggingComputer$</SuppressionValue>
+						<SuppressionValue>$Data/EventLevel$</SuppressionValue>
+					</Suppression>
+					<Custom1 />
+					<Custom2 />
+					<Custom3 />
+					<Custom4 />
+					<Custom5 />
+					<Custom6 />
+					<Custom7 />
+					<Custom8 />
+					<Custom9 />
+					<Custom10 />
+				</WriteAction>
+			</WriteActions>
+		</Rule>
+		</Rules>
+	</Monitoring>
+	<Presentation>
+		<StringResources>
+			<StringResource ID="F12.Wren.Monitoring.Rule.Alert.WindowsEvent741742743.AlertMessage" />
+		</StringResources>
+	</Presentation>
+	<LanguagePacks>
+		<LanguagePack ID="ENU" IsDefault="true">
+			<DisplayStrings>
+				<DisplayString ElementID="F12.Wren.Monitoring.Rule.Alert.WindowsEvent741742743">
+					<Name>F12 Payments - Event 741, 742 or 743</Name>
+				</DisplayString>
+				<DisplayString ElementID="F12.Wren.Monitoring.Rule.Alert.WindowsEvent741742743.AlertMessage">
+					<Name>F12 Payments - Event 741, 742 or 743 - Fail Message</Name>
+					<Description>Event Description: {0}</Description>
+				</DisplayString>
+			</DisplayStrings>
+			<KnowledgeArticles>
+				<KnowledgeArticle ElementID="F12.Wren.Monitoring.Rule.Alert.WindowsEvent741742743" Visible="true">
+					<MamlContent>
+						<maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+							<maml:title>Summary</maml:title>
+							<maml:para>Windows Event 741, 742 or 743 has occured.</maml:para>
+						</maml:section>
+						<maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+							<maml:title>Causes</maml:title>
+							<maml:para>Something went wrong</maml:para>
+						</maml:section>
+						<maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+							<maml:title>Resolutions</maml:title>
+							<maml:para>Phone support</maml:para>
+						</maml:section>
+					</MamlContent>
+				</KnowledgeArticle>
+			</KnowledgeArticles>
+		</LanguagePack>
+	</LanguagePacks>
+</ManagementPackFragment>
