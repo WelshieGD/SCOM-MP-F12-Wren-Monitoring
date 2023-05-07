@@ -1,0 +1,84 @@
+<TemplateGroup>
+  <Instances>
+    <Instance ID="Instance1cb8bbbf42bb4bd8ba0ce5a2d4aaa2da" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <MonitorType>Windows!Microsoft.Windows.2SingleEventLog2StateMonitorType</MonitorType>
+        <MonitorConfig>&lt;!-- Addition Host required as queue is hosted by role is hosted by computer--&gt;&lt;FirstComputerName&gt;$Target/Host/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$&lt;/FirstComputerName&gt;&lt;FirstLogName&gt;Application&lt;/FirstLogName&gt;&lt;FirstExpression&gt;&lt;And&gt;&lt;Expression&gt;&lt;SimpleExpression&gt;&lt;ValueExpression&gt;&lt;XPathQuery Type="UnsignedInteger"&gt;EventDisplayNumber&lt;/XPathQuery&gt;&lt;/ValueExpression&gt;&lt;Operator&gt;Equal&lt;/Operator&gt;&lt;ValueExpression&gt;&lt;Value Type="UnsignedInteger"&gt;301&lt;/Value&gt;&lt;/ValueExpression&gt;&lt;/SimpleExpression&gt;&lt;/Expression&gt;&lt;Expression&gt;&lt;SimpleExpression&gt;&lt;ValueExpression&gt;&lt;XPathQuery Type="String"&gt;PublisherName&lt;/XPathQuery&gt;&lt;/ValueExpression&gt;&lt;Operator&gt;Equal&lt;/Operator&gt;&lt;ValueExpression&gt;&lt;Value Type="String"&gt;EventCreate&lt;/Value&gt;&lt;/ValueExpression&gt;&lt;/SimpleExpression&gt;&lt;/Expression&gt;&lt;Expression&gt;&lt;RegExExpression&gt;&lt;ValueExpression&gt;&lt;!-- Ideally use Param so not having to evaluate complete event description --&gt;&lt;XPathQuery Type="String"&gt;EventDescription&lt;/XPathQuery&gt;&lt;/ValueExpression&gt;&lt;Operator&gt;ContainsSubstring&lt;/Operator&gt;&lt;Pattern&gt;$Target/Property[Type="F12.Wren.Monitoring.Stores.Queue"]/StoreCode$&lt;/Pattern&gt;&lt;/RegExExpression&gt;&lt;/Expression&gt;&lt;/And&gt;&lt;/FirstExpression&gt;&lt;!-- Addition Host required as queue is hosted by role is hosted by computer--&gt;&lt;SecondComputerName&gt;$Target/Host/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$&lt;/SecondComputerName&gt;&lt;SecondLogName&gt;Application&lt;/SecondLogName&gt;&lt;SecondExpression&gt;&lt;And&gt;&lt;Expression&gt;&lt;SimpleExpression&gt;&lt;ValueExpression&gt;&lt;XPathQuery Type="UnsignedInteger"&gt;EventDisplayNumber&lt;/XPathQuery&gt;&lt;/ValueExpression&gt;&lt;Operator&gt;Equal&lt;/Operator&gt;&lt;ValueExpression&gt;&lt;Value Type="UnsignedInteger"&gt;201&lt;/Value&gt;&lt;/ValueExpression&gt;&lt;/SimpleExpression&gt;&lt;/Expression&gt;&lt;Expression&gt;&lt;SimpleExpression&gt;&lt;ValueExpression&gt;&lt;XPathQuery Type="String"&gt;PublisherName&lt;/XPathQuery&gt;&lt;/ValueExpression&gt;&lt;Operator&gt;Equal&lt;/Operator&gt;&lt;ValueExpression&gt;&lt;Value Type="String"&gt;EventCreate&lt;/Value&gt;&lt;/ValueExpression&gt;&lt;/SimpleExpression&gt;&lt;/Expression&gt;&lt;Expression&gt;&lt;RegExExpression&gt;&lt;ValueExpression&gt;&lt;!-- Ideally use Param so not having to evaluate complete event description --&gt;&lt;XPathQuery Type="String"&gt;EventDescription&lt;/XPathQuery&gt;&lt;/ValueExpression&gt;&lt;Operator&gt;ContainsSubstring&lt;/Operator&gt;&lt;Pattern&gt;$Target/Property[Type="F12.Wren.Monitoring.Stores.Queue"]/StoreCode$&lt;/Pattern&gt;&lt;/RegExExpression&gt;&lt;/Expression&gt;&lt;/And&gt;&lt;/SecondExpression&gt;</MonitorConfig>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>FirstEventRaised</OperationalStateId>
+            <OperationalStateDisplayName>Unhealthy Event - 301</OperationalStateDisplayName>
+            <MonitorTypeStateId>FirstEventRaised</MonitorTypeStateId>
+            <HealthState>Error</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>SecondEventRaised</OperationalStateId>
+            <OperationalStateDisplayName>Healthy Event - 201</OperationalStateDisplayName>
+            <MonitorTypeStateId>SecondEventRaised</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <ParentMonitor>Health!System.Health.AvailabilityState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>Monitor.Unit.2StateEvent.Queue</Id>
+        <DisplayName>Queue Failed</DisplayName>
+        <Description>Description for the new unit monitor.</Description>
+        <Target>F12.Wren.Monitoring.Stores.Queue</Target>
+        <Enabled>true</Enabled>
+        <Category>AvailabilityHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Error</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>Queue Processing Failure</AlertName>
+        <AlertDescription>Queue on $Target/Host/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$ :
+
+Event Description:
+$Data/Context/EventDescription$</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+    <Instance ID="Instancef062287b8aa3437bb426921e8bac8ce7" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <MonitorType>Windows!Microsoft.Windows.2SingleEventLog2StateMonitorType</MonitorType>
+        <MonitorConfig>&lt;FirstComputerName&gt;$Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$&lt;/FirstComputerName&gt;&lt;FirstLogName&gt;Application&lt;/FirstLogName&gt;&lt;FirstExpression&gt;&lt;And&gt;&lt;Expression&gt;&lt;SimpleExpression&gt;&lt;ValueExpression&gt;&lt;XPathQuery Type="UnsignedInteger"&gt;EventDisplayNumber&lt;/XPathQuery&gt;&lt;/ValueExpression&gt;&lt;Operator&gt;Equal&lt;/Operator&gt;&lt;ValueExpression&gt;&lt;Value Type="UnsignedInteger"&gt;301&lt;/Value&gt;&lt;/ValueExpression&gt;&lt;/SimpleExpression&gt;&lt;/Expression&gt;&lt;Expression&gt;&lt;SimpleExpression&gt;&lt;ValueExpression&gt;&lt;XPathQuery Type="String"&gt;PublisherName&lt;/XPathQuery&gt;&lt;/ValueExpression&gt;&lt;Operator&gt;Equal&lt;/Operator&gt;&lt;ValueExpression&gt;&lt;Value Type="String"&gt;EventCreate&lt;/Value&gt;&lt;/ValueExpression&gt;&lt;/SimpleExpression&gt;&lt;/Expression&gt;&lt;/And&gt;&lt;/FirstExpression&gt;&lt;SecondComputerName&gt;$Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$&lt;/SecondComputerName&gt;&lt;SecondLogName&gt;Application&lt;/SecondLogName&gt;&lt;SecondExpression&gt;&lt;And&gt;&lt;Expression&gt;&lt;SimpleExpression&gt;&lt;ValueExpression&gt;&lt;XPathQuery Type="UnsignedInteger"&gt;EventDisplayNumber&lt;/XPathQuery&gt;&lt;/ValueExpression&gt;&lt;Operator&gt;Equal&lt;/Operator&gt;&lt;ValueExpression&gt;&lt;Value Type="UnsignedInteger"&gt;201&lt;/Value&gt;&lt;/ValueExpression&gt;&lt;/SimpleExpression&gt;&lt;/Expression&gt;&lt;Expression&gt;&lt;SimpleExpression&gt;&lt;ValueExpression&gt;&lt;XPathQuery Type="String"&gt;PublisherName&lt;/XPathQuery&gt;&lt;/ValueExpression&gt;&lt;Operator&gt;Equal&lt;/Operator&gt;&lt;ValueExpression&gt;&lt;Value Type="String"&gt;EventCreate&lt;/Value&gt;&lt;/ValueExpression&gt;&lt;/SimpleExpression&gt;&lt;/Expression&gt;&lt;/And&gt;&lt;/SecondExpression&gt;</MonitorConfig>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>FirstEventRaised</OperationalStateId>
+            <OperationalStateDisplayName>First Event - 201 - Unhealthy</OperationalStateDisplayName>
+            <MonitorTypeStateId>FirstEventRaised</MonitorTypeStateId>
+            <HealthState>Error</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>SecondEventRaised</OperationalStateId>
+            <OperationalStateDisplayName>Second Event - 301 - Healthy</OperationalStateDisplayName>
+            <MonitorTypeStateId>SecondEventRaised</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <ParentMonitor>Health!System.Health.AvailabilityState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>Monitor.Unit.2StateEvent.ConnectionToStoreServer</Id>
+        <DisplayName>Connection to Store Server</DisplayName>
+        <Description>Description for the new unit monitor.</Description>
+        <Target>F12.Wren.Monitoring.Stores.ComputerRole.StoreClient</Target>
+        <Enabled>true</Enabled>
+        <Category>AvailabilityHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Error</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>Connection to Store Server Failed</AlertName>
+        <AlertDescription>Client $Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$ lost connection to store server:
+
+Event Description:
+$Data/Context/EventDescription$</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+  </Instances>
+</TemplateGroup>

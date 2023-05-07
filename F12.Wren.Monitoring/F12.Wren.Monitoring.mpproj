@@ -78,6 +78,13 @@
     </ManagementPackReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Health Model\UnitMonitors\EventLog2State.mptg.mpx">
+      <SubType>Code</SubType>
+      <DependentUpon>Health Model\UnitMonitors\EventLog2State.mptg</DependentUpon>
+    </Compile>
+    <Compile Include="Health Model\UnitMonitors\EventLogKnowledge.mpx">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Health Model\UnitMonitors\Performance.mptg.mpx">
       <SubType>Code</SubType>
       <DependentUpon>Health Model\UnitMonitors\Performance.mptg</DependentUpon>
@@ -138,6 +145,10 @@
     <EmbeddedResource Include="Service Model\GetServersAndClientsByStoreCode\GetServersAndClientsByStoreCode.ps1" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Health Model\UnitMonitors\EventLog2State.mptg">
+      <SubType>Content</SubType>
+      <Generator>FragmentGenerator</Generator>
+    </Content>
     <Content Include="Health Model\UnitMonitors\Performance.mptg">
       <SubType>Content</SubType>
       <Generator>FragmentGenerator</Generator>
