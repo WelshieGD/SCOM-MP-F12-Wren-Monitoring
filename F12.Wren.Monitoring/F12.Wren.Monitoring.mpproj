@@ -149,7 +149,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Health Model" />
+    <Folder Include="Health Model\Scripts" />
     <Folder Include="Health Model\Rules" />
+    <Folder Include="Health Model\Scripts\NumFilesOldestFile" />
     <Folder Include="Health Model\UnitMonitors" />
     <Folder Include="Service Model" />
     <Folder Include="Service Model\ComputerRoles" />
@@ -160,6 +162,7 @@
     <Folder Include="Service Model\SQL" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Health Model\Scripts\NumFilesOldestFile\AllQueuesStat.ps1" />
     <EmbeddedResource Include="Service Model\ApplicationComponent\DiscoverQueues.ps1" />
     <EmbeddedResource Include="Service Model\GetServersAndClientsByStoreCode\GetServersAndClientsByStoreCode.ps1" />
   </ItemGroup>
