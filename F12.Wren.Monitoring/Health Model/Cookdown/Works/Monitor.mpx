@@ -48,6 +48,12 @@
           
           </Description>
         </DisplayString>
+
+        <DisplayString ElementID="F12.Wren.Monitoring.UnitMonitor.SingleQueues">
+          <Name>Queue Monitor - Cookdown</Name>
+          <Description></Description>
+        </DisplayString>
+        
       </DisplayStrings>
       <KnowledgeArticles>
         <KnowledgeArticle ElementID="F12.Wren.Monitoring.UnitMonitor.SingleQueues" Visible="true">
