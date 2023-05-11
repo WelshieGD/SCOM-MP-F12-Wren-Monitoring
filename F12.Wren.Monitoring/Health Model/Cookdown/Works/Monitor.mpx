@@ -1,0 +1,74 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Monitoring>
+    <Monitors>
+      <UnitMonitor ID="F12.Wren.Monitoring.UnitMonitor.SingleQueues" Enabled="true" Target="F12.Wren.Monitoring.Stores.Queue" ParentMonitorID="Health!System.Health.PerformanceState" Remotable="true" Priority="Normal" Accessibility="Public" TypeID="F12.Wren.Monitoring.MonitorType.SingleQueueStatistics">
+        <Category>PerformanceHealth</Category>
+        <AlertSettings AlertMessage="F12.Wren.Monitoring.UnitMonitor.SingleQueues.AlertMessage">
+          <AlertOnState>Warning</AlertOnState>
+          <AutoResolve>true</AutoResolve>
+          <AlertPriority>Normal</AlertPriority>
+          <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+          <AlertParameters>
+            <AlertParameter1>$Target/Host/Host/Property[Type='Windows!Microsoft.Windows.Computer']/PrincipalName$</AlertParameter1>
+            <AlertParameter2>$Target/Host/Property[Type="F12.Wren.Monitoring.Stores.ComputerRole.CentralProcessor"]/QueuePath$</AlertParameter2>
+            <AlertParameter3>$Target/Property[Type="F12.Wren.Monitoring.Stores.Queue"]/StoreCode$</AlertParameter3>
+          </AlertParameters>
+        </AlertSettings>
+        <OperationalStates>
+          <OperationalState ID="UnderThreshold" MonitorTypeStateID="UnderThreshold" HealthState="Success" />
+          <OperationalState ID="WarningThreshold" MonitorTypeStateID="OverWarningThreshold" HealthState="Warning" />
+          <OperationalState ID="ErrorTreshold" MonitorTypeStateID="OverErrorThreshold" HealthState="Error" />
+        </OperationalStates>
+        <Configuration>
+          <IntervalSeconds>120</IntervalSeconds>
+          <SyncTime></SyncTime>
+          <Folder>$Target/Host/Property[Type="F12.Wren.Monitoring.Stores.ComputerRole.CentralProcessor"]/QueuePath$</Folder>
+          <StoreCode>$Target/Property[Type="F12.Wren.Monitoring.Stores.Queue"]/StoreCode$</StoreCode>
+          <Counter>FileCount</Counter>
+          <WarningThreshold>10</WarningThreshold>
+          <ErrorThreshold>20</ErrorThreshold>
+        </Configuration>
+      </UnitMonitor>
+    </Monitors>
+  </Monitoring>
+  <Presentation>
+    <StringResources>
+      <StringResource ID="F12.Wren.Monitoring.UnitMonitor.SingleQueues.AlertMessage" />
+    </StringResources>
+  </Presentation>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="F12.Wren.Monitoring.UnitMonitor.SingleQueues.AlertMessage">
+          <Name>Too many files in Queue - Cookdown</Name>
+          <Description>Too many files in queues on server {0}.
+          Queue = {1}
+          Store Code = {2}
+          
+          </Description>
+        </DisplayString>
+      </DisplayStrings>
+      <KnowledgeArticles>
+        <KnowledgeArticle ElementID="F12.Wren.Monitoring.UnitMonitor.SingleQueues" Visible="true">
+          <MamlContent>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Summary</maml:title>
+              <maml:para>Too many files everywhere.</maml:para>
+            </maml:section>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Causes</maml:title>
+              <maml:para>When we do too much work.</maml:para>
+            </maml:section>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Resolutions</maml:title>
+              <maml:para>Go on a break.</maml:para>
+            </maml:section>
+          </MamlContent>
+        </KnowledgeArticle>
+      </KnowledgeArticles>
+    </LanguagePack>
+  </LanguagePacks>
+
+
+</ManagementPackFragment>

@@ -1,0 +1,204 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <ModuleTypes>
+
+      <!-- Although this is at top the code; this is created after the Probe Module (we need the Probe module to be created before creating the Data Source) -->
+      <!-- F12.Wren.Monitoring.DataSource.AllQueueStatistics.PropertyBag -->
+      <!-- Just need to change the probe module that is called -->
+      <DataSourceModuleType ID="F12.Wren.Monitoring.DataSource.SingleQueueStatistics.PropertyBag" Accessibility ="Internal">
+        <Configuration>
+          <!-- From Scheduler -->
+          <xsd:element name="IntervalSeconds" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="SyncTime" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <!-- From Probe -->
+          <xsd:element name="Folder" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+        </OverrideableParameters>
+        <ModuleImplementation>
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Schedule" TypeID="System!System.SimpleScheduler">
+                <!-- From <Configuration> -->
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+              </DataSource>
+              <!-- Just need to change the probe module that is called -->
+              <ProbeAction ID="Script" TypeID="F12.Wren.Monitoring.Probe.SingleQueueStatistics">
+                <Folder>$Config/Folder$</Folder>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="Script">
+                <Node ID="Schedule" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+      </DataSourceModuleType>
+
+
+      <!-- A brand new data source that will do the filter on store code (the condition detection) Can steal structure from Performance module and then tweak -->
+      <!-- F12.Wren.Monitoring.DataSource.SingeQueueStatistics.PropertyBag -->
+      <!-- This doesn't cookdown as StoreCode is unique for each queue but this isn't running the script -->
+      <DataSourceModuleType ID="F12.Wren.Monitoring.DataSource.SingleQueueStatistics.PropertyBag.Filtered" Accessibility="Internal">
+        <Configuration>
+          <!-- From Scheduler -->
+          <xsd:element name="IntervalSeconds" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="SyncTime" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <!-- From Probe -->
+          <xsd:element name="Folder" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <!-- Remove Counter and replace with store Code -->
+          <xsd:element name="StoreCode" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+        </OverrideableParameters>
+        <ModuleImplementation>
+          <Composite>
+            <MemberModules>
+              <!-- UPDATE Data Source ID-->
+              <DataSource ID="DS" TypeID="F12.Wren.Monitoring.DataSource.SingleQueueStatistics.PropertyBag">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+                <Folder>$Config/Folder$</Folder>
+
+              </DataSource>
+              <!-- ADD IN A FILTER-->
+              <ConditionDetection ID="Filter" TypeID="System!System.ExpressionFilter">
+                <Expression>
+                  <SimpleExpression>
+                    <ValueExpression>
+                      <XPathQuery Type="String">Property[@Name="StoreCode"]</XPathQuery>
+                    </ValueExpression>
+                    <Operator>Equal</Operator>
+                    <ValueExpression>
+                      <Value Type="String">$Config/StoreCode$</Value>
+                    </ValueExpression>
+                  </SimpleExpression>
+                </Expression>
+              </ConditionDetection>
+      
+              <!-- Removed CD for MapToPerf (DataGenericMapper) -->
+
+            </MemberModules>
+
+            <Composition>
+              <Node ID="Filter">
+                <Node ID="DS" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <!-- Change output type to  --> 
+        <OutputType>System!System.PropertyBagData</OutputType>
+      </DataSourceModuleType>
+
+
+      <!-- Second Data Source for CD (Data Mapper) for rule \ data collection  -->
+      <!-- F12.Wren.Monitoring.DataSource.SingleQueueStatistics.Performance.Filtered -->
+      <DataSourceModuleType ID="F12.Wren.Monitoring.DataSource.SingleQueueStatistics.Performance.Filtered" Accessibility="Internal">
+        <Configuration>
+          <!-- From Scheduler -->
+          <xsd:element name="IntervalSeconds" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="SyncTime" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <!-- From Probe -->
+          <xsd:element name="Folder" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="StoreCode" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <!-- Add this as the script returns multiple data streams each of which will be created as a separate counter -->
+          <xsd:element name="Counter" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+        </OverrideableParameters>
+        <ModuleImplementation>
+          <Composite>
+            <MemberModules>
+              <DataSource ID="DS" TypeID="F12.Wren.Monitoring.DataSource.SingleQueueStatistics.PropertyBag.Filtered">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+                <Folder>$Config/Folder$</Folder>
+                <StoreCode>$Config/StoreCode$</StoreCode>
+              </DataSource>
+              <ConditionDetection ID="MapToPerf" TypeID="Perf!System.Performance.DataGenericMapper">
+                <ObjectName>F12 Stores</ObjectName>
+                <!-- Can now have one module for every counter that the script generates -->
+                <CounterName>$Config/Counter$</CounterName>
+                <!-- Single instance at the moment as targetted at top level folder and not individual queue folders -->
+                <InstanceName>$Config/StoreCode$</InstanceName>
+                <!-- $Config/Counter$ will be resolved first and then the value for that counter -->
+                <Value>$Data/Property[@Name="$Config/Counter$"]$</Value>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID="MapToPerf">
+                <Node ID="DS" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+      </DataSourceModuleType>
+      
+      
+      
+      <!-- Create Probe Module First so that Data Source Can Call it-->
+      <!-- F12.Wren.Monitoring.Probe.SingleQueueStatistics -->
+      <!-- Change Script Name and Script Body (and ID) -->
+      <ProbeActionModuleType ID="F12.Wren.Monitoring.Probe.SingleQueueStatistics" Accessibility="Internal">
+
+        <!-- Configuration is (are) the parameter(s) that need to be passed into the module-->
+        <Configuration>
+          <xsd:element name="Folder" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+        </Configuration>
+        <!-- What do we want to allow end users to override. In this case - nothing! We are assuming queue folder is fixed and not overridable. -->
+        <OverrideableParameters></OverrideableParameters>
+        <ModuleImplementation>
+          <Composite>
+            <!-- What modules does this module contain? -->
+            <MemberModules>
+              <!-- ID is internal to the module so only needs to be unique within the module. It will be used in the composition section -->
+              <!-- TriggerOnly probe = doesn't require any incoming data except a triger -->
+              <!-- If we just use PowerShellPropertyBagProbe then it would expect incoming data -->
+              <ProbeAction ID="Script" TypeID="Windows!Microsoft.Windows.PowerShellPropertyBagTriggerOnlyProbe">
+                <!-- What are parameters that this module requires ?? -->
+                <!-- https://systemcenter.wiki/?GetElement=Microsoft.Windows.PowerShellPropertyBagTriggerOnlyProbe&Type=ProbeActionModuleType&ManagementPack=Microsoft.Windows.Library&Version=6.1.7221.0 -->
+                <!-- Configuration for module (minOccurs="0" is optional)
+                  <xsd:element name="ScriptName" type="NonNullString"/>
+                  <xsd:element name="ScriptBody" type="NonNullString"/>
+                  <xsd:element name="SnapIns" type="SnapInsType" minOccurs="0" maxOccurs="1"/>
+                  <xsd:element name="Parameters" type="NamedParametersType" minOccurs="0" maxOccurs="1"/>
+                  <xsd:element name="TimeoutSeconds" type="xsd:integer"/>
+                  <xsd:element name="StrictErrorHandling" type="xsd:boolean" minOccurs="0" maxOccurs="1"/> 
+              -->
+                <ScriptName>SingleQueueStatistics.ps1</ScriptName>
+                <ScriptBody>$IncludeFileContent/Health Model/Cookdown/Works/ASingleQueueCookdownGood.ps1$</ScriptBody>
+                <Parameters>
+                  <Parameter>
+                    <!-- Parameter from script -->
+                    <Name>queuesPath</Name>
+                    <!-- $Config looks bac back at <Configuration> section xsd:element name="Folder" -->
+                    <Value>$Config/Folder$</Value>
+                  </Parameter>
+                </Parameters>
+                <TimeoutSeconds>120</TimeoutSeconds>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="Script" />
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+        <TriggerOnly>true</TriggerOnly>
+      </ProbeActionModuleType>
+      
+      
+    </ModuleTypes>
+  </TypeDefinitions>
+</ManagementPackFragment>

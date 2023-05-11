@@ -1,17 +1,13 @@
-﻿param 
-(
-	[string]$queuesPath
-)
-
-
+﻿param ([string] $queuesPath)
 
 # SCOM Specific Header
 $api = New-Object -comObject 'MOM.ScriptAPI'
-$api.LogScriptEvent('AllQueuesStats.ps1', 101, 4, $folder)
+$api.LogScriptEvent('AllQueuesStats.ps1', 101, 4, "Queue Path is $queuesPath")
 
 
 
 $files = Get-ChildItem -Path $queuesPath -Recurse | where {$_.psIsContainer -eq $false}
+
 
 if ($files -ne $null) {$count = $files.count}
 else {$count = 0}
@@ -35,12 +31,9 @@ $bag.AddValue('OldestFile', $oldestfile)
 $bag.AddValue('TotalSize', $size)
 
 
-# $bag
+$bag
 
 # For Testing
-$api.return($bag)
-
-
-
+# $api.return($bag)
 
 

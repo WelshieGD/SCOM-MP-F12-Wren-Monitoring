@@ -1,0 +1,136 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <MonitorTypes>
+      <UnitMonitorType ID="F12.Wren.Monitoring.MonitorType.AllQueuesStatistics" Accessibility="Internal">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="UnderThreshold" NoDetection="false"/>
+          <MonitorTypeState ID="OverWarningThreshold" NoDetection="false"/>
+          <MonitorTypeState ID="OverErrorThreshold" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <!-- From Scheduler -->
+          <xsd:element name="IntervalSeconds" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="SyncTime" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <!-- From Probe -->
+          <xsd:element name="Folder" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <!-- Add this as the script returns multiple data streams each of which will be created as a separate counter -->
+          <xsd:element name="Counter" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="WarningThreshold" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="ErrorThreshold" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+            <OverrideableParameter ID="WarningThreshold" Selector="$Config/WarningThreshold$" ParameterType="int"/>
+            <OverrideableParameter ID="ErrorThreshold" Selector="$Config/ErrorThreshold$" ParameterType="string"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="F12.Wren.Monitoring.DataSource.AllQueuesStatistics.PropertyBag">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <Folder>$Config/Folder$</Folder>
+            </DataSource>
+            <!-- We have added in the property bag probe seperately to be used for on demand detection (this has no schedule). The only parameter here is folder -->
+            <!-- We can't use the DS above for on demand detection as that has a schedule-->
+            <ProbeAction ID="Probe" TypeID="F12.Wren.Monitoring.Probe.AllQueueStatistics">
+              <Folder>$Config/Folder$</Folder>
+            </ProbeAction>
+            <!-- To determine health state for a 3 state monitor we need 3 condition detections - one for each health state \ workflow -->
+            <ConditionDetection ID="FilterUnderThreshold" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Integer">Property[@Name="$Config/Counter$"]</XPathQuery>
+                  </ValueExpression>
+                  <Operator>LessEqual</Operator>
+                  <ValueExpression>
+                    <Value Type="Integer">$Config/WarningThreshold$</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <!-- Over Warning and Under Error -->
+            <ConditionDetection ID="FilterOverWarningThreshold" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <And>
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Integer">Property[@Name="$Config/Counter$"]</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Greater</Operator>
+                  <ValueExpression>
+                    <Value Type="Integer">$Config/WarningThreshold$</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Integer">Property[@Name="$Config/Counter$"]</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Less</Operator>
+                  <ValueExpression>
+                    <Value Type="Integer">$Config/ErrorThreshold$</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+              </And>
+              </Expression>
+            </ConditionDetection>
+            <!-- Over Error threshold -->
+            <ConditionDetection ID="FilterOverErrorThreshold" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Integer">Property[@Name="$Config/Counter$"]</XPathQuery>
+                  </ValueExpression>
+                  <Operator>GreaterEqual</Operator>
+                  <ValueExpression>
+                    <Value Type="Integer">$Config/ErrorThreshold$</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID ="UnderThreshold">
+              <Node ID="FilterUnderThreshold">
+                <Node ID="DS"></Node>
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID ="OverWarningThreshold">
+              <Node ID="FilterOverWarningThreshold">
+                <Node ID="DS"></Node>
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID ="OverErrorThreshold">
+              <Node ID="FilterOverErrorThreshold">
+                <Node ID="DS"></Node>
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+          <OnDemandDetections>
+            <OnDemandDetection MonitorTypeStateID="UnderThreshold">
+              <Node ID="FilterUnderThreshold">
+                <Node ID="Probe" />
+              </Node>
+          </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="OverWarningThreshold">
+              <Node ID="FilterOverWarningThreshold">
+                <Node ID="Probe" />
+              </Node>
+            </OnDemandDetection>
+                <OnDemandDetection MonitorTypeStateID="OverErrorThreshold">
+                  <Node ID="FilterOverErrorThreshold">
+                    <Node ID="Probe" />
+                  </Node>
+                </OnDemandDetection>
+          </OnDemandDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+    </MonitorTypes>
+  </TypeDefinitions>
+</ManagementPackFragment>

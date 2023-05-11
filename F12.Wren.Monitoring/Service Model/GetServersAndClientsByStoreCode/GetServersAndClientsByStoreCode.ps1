@@ -13,7 +13,6 @@ $Class = Get-SCOMClass -Name F12.Wren.Monitoring.Stores.ComputerRole.StoreComput
 $api.LogScriptEvent('DiscoverStores.ps1',998,4,"Store Discovery Started")
 
 $StoreServers = $Class | Get-SCOMClassInstance
-$api.LogScriptEvent('DiscoverStores.ps1',998,4,"Store Servers = $storeServers")
 
 $StoreCodes = $StoreServers | foreach ({$_."[F12.Wren.Monitoring.Stores.ComputerRole.StoreComputer].StoreCode"}) | group Value
 $api.LogScriptEvent('DiscoverStores.ps1',998,4,"StoreCodes = $StoreCodes")

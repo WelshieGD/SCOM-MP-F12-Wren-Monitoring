@@ -67,7 +67,7 @@
 							</WithinTimeSchedule>
 						</TimeControl>
 						<CountingCondition>
-							<Count>10</Count>
+							<Count>2</Count>
 							<!-- how many events to look for in given time period -->
 							<CountMode>OnNewItemTestOutputRestart_OnTimerSlideByOne</CountMode>
 						</CountingCondition>

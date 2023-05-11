@@ -34,6 +34,12 @@
       <Alias>MSWD</Alias>
       <MinVersion>7.0.42.0</MinVersion>
     </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.SystemCenter.DataWarehouse.Library">
+      <HintPath>C:\Program Files (x86)\System Center Visual Studio Authoring Extensions\References\OM2016\Microsoft.SystemCenter.DataWarehouse.Library.mp</HintPath>
+      <Alias>MSDL</Alias>
+      <MinVersion>7.2.11719.0</MinVersion>
+      <PackageToBundle>False</PackageToBundle>
+    </ManagementPackReference>
     <ManagementPackReference Include="Microsoft.SystemCenter.InstanceGroup.Library">
       <HintPath>C:\Program Files (x86)\System Center Visual Studio Authoring Extensions\References\OM2016\Microsoft.SystemCenter.InstanceGroup.Library.mp</HintPath>
       <Alias>MSIL</Alias>
@@ -81,9 +87,37 @@
       <HintPath>C:\Program Files (x86)\System Center Visual Studio Authoring Extensions\References\OM2016\System.Performance.Library.mp</HintPath>
       <Alias>Perf</Alias>
       <MinVersion>7.0.8437.0</MinVersion>
+      <PackageToBundle>False</PackageToBundle>
     </ManagementPackReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Health Model\Cookdown\Fails\MonitorCookdownFails.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Health Model\Cookdown\Works\Module.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Health Model\Cookdown\Works\ModuleMonitorTypes.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Health Model\Cookdown\Works\Monitor.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Health Model\Cookdown\Works\Rule.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Health Model\CustomModules\Modules.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Health Model\CustomModules\ModulesMonitorTypes.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Health Model\CustomModules\Monitor.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Health Model\CustomModules\Rule.mpx">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Health Model\Rules\AlertOnEvent.mpx">
       <SubType>Code</SubType>
     </Compile>
@@ -149,9 +183,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Health Model" />
-    <Folder Include="Health Model\Scripts" />
+    <Folder Include="Health Model\Cookdown\Fails" />
+    <Folder Include="Health Model\Cookdown\Works" />
+    <Folder Include="Health Model\CustomModules" />
+    <Folder Include="Health Model\Cookdown" />
     <Folder Include="Health Model\Rules" />
-    <Folder Include="Health Model\Scripts\NumFilesOldestFile" />
     <Folder Include="Health Model\UnitMonitors" />
     <Folder Include="Service Model" />
     <Folder Include="Service Model\ComputerRoles" />
@@ -162,7 +198,8 @@
     <Folder Include="Service Model\SQL" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Health Model\Scripts\NumFilesOldestFile\AllQueuesStat.ps1" />
+    <EmbeddedResource Include="Health Model\Cookdown\Works\ASingleQueueCookdownGood.ps1" />
+    <EmbeddedResource Include="Health Model\CustomModules\AllQueuesStat.ps1" />
     <EmbeddedResource Include="Service Model\ApplicationComponent\DiscoverQueues.ps1" />
     <EmbeddedResource Include="Service Model\GetServersAndClientsByStoreCode\GetServersAndClientsByStoreCode.ps1" />
   </ItemGroup>
